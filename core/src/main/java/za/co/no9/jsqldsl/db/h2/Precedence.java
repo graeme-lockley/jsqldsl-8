@@ -1,6 +1,7 @@
 package za.co.no9.jsqldsl.db.h2;
 
 import java.util.function.BiFunction;
+import java.util.function.Function;
 
 public enum Precedence {
     LOWEST_PRECEDENCE(0),
@@ -8,6 +9,8 @@ public enum Precedence {
 
     OR_OPERATOR(2),
     AND_OPERATOR(3),
+
+    NOT_OPERATOR(4),
 
     GE_OPERATOR(5),
     GT_OPERATOR(5),
@@ -32,5 +35,9 @@ public enum Precedence {
         } else {
             return '(' + format.apply(left.asString(this), right.asString(this)) + ')';
         }
+    }
+
+    public String asString(Precedence contextPrecedence, BaseType value, Function<String, String> format) {
+        return format.apply(value.asString(this));
     }
 }

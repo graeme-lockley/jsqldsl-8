@@ -32,4 +32,8 @@ public abstract class BOOLEANOperations implements BOOLEANType {
     public BOOLEANOperations or(BOOLEANType value) {
         return new OROperator(this, value);
     }
+
+    public BOOLEANOperations not() {
+        return new NOTOperator(this);
+    }
 }

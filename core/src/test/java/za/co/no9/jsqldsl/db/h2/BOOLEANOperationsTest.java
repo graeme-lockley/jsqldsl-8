@@ -6,6 +6,14 @@ import static org.junit.Assert.assertEquals;
 
 public class BOOLEANOperationsTest {
     @Test
+    public void should_not_expression() throws Exception {
+        assertEquals(
+                "FROM TABLE_A AS a WHERE NOT(a.INT < 1000)",
+                Query.from(TABLE_A.as("a"))
+                        .where(a -> a.INT.lt(1000).not()).asString());
+    }
+
+    @Test
     public void should_and_with_expression() throws Exception {
         assertEquals(
                 "FROM TABLE_A AS a WHERE a.BOOLEAN = TRUE AND TRUE AND a.INT < 1000 AND a.INT > 10",
