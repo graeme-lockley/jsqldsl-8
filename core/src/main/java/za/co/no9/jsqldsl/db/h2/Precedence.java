@@ -20,7 +20,6 @@ public enum Precedence {
     EQ_OPERATOR(6),
     NOTEQ_OPERATOR(6),
 
-
     HIGHEST_PRECEDENCE(1000);
 
     private int precedence;

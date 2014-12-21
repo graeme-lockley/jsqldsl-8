@@ -1,5 +1,6 @@
 package za.co.no9.jsqldsl.db.h2;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -28,9 +29,9 @@ public class Query1<T1 extends TableReference> {
 //        return new OnQuery2<>(t1, table2);
 //    }
 
-//    public Record1<T1> select(Function<T1, List<BaseType>> projections) {
-//        return new Record1<>(this, projections.apply(t1));
-//    }
+    public Record1 select(Function<T1, List<BaseType>> projections) {
+        return new Record1<>(this, projections.apply(t1));
+    }
 
     public String asString() {
         return "FROM " + t1.asString() + (where.isPresent() ? (" WHERE " + where.get().asString(Precedence.QUERY_WHERE)) : "");
