@@ -4,12 +4,15 @@ import java.util.Optional;
 
 public class TABLE_A extends TableReference {
     private static final String NAME = "TABLE_A";
-    public final INTColumnReference ID;
+
+    public final INTColumnReference INT;
+    public final BOOLEANColumnReference BOOLEAN;
 
     TABLE_A(Optional<String> alias) {
         super(alias);
 
-        ID = INTColumnReference.from(this, "ID");
+        INT = INTColumnReference.from(this, "INT");
+        BOOLEAN = BOOLEANColumnReference.from(this, "BOOLEAN");
     }
 
     public static TABLE_A ref() {

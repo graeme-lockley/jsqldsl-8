@@ -15,8 +15,8 @@ public class QueryTest {
     @Test
     public void should_support_where_clause() throws Exception {
         assertEquals(
-                "FROM TABLE_A AS a WHERE a.ID = 100",
+                "FROM TABLE_A AS a WHERE a.INT = 100",
                 Query.from(TABLE_A.as("a"))
-                        .where(a -> a.ID.eq(100)).asString());
+                        .where(a -> a.INT.eq(100)).asString());
     }
 }
