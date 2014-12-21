@@ -1,6 +1,6 @@
 package za.co.no9.jsqldsl.db.h2;
 
-public class LEOperator <T extends BaseType> implements BOOLEANType {
+public class LEOperator<T extends BaseType> extends BOOLEANOperations implements BOOLEANType {
     private final T left;
     private final T right;
 
