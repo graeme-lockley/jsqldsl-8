@@ -8,9 +8,10 @@ public class BOOLEANOperationsTest {
     @Test
     public void should_and_with_expression() throws Exception {
         assertEquals(
-                "FROM TABLE_A AS a WHERE a.BOOLEAN = true AND a.INT < 1000 AND a.INT > 10",
+                "FROM TABLE_A AS a WHERE a.BOOLEAN = TRUE AND TRUE AND a.INT < 1000 AND a.INT > 10",
                 Query.from(TABLE_A.as("a"))
                         .where(a -> a.BOOLEAN.eq(true)
+                                .and(true)
                                 .and(a.INT.lt(1000))
                                 .and(a.INT.gt(10))).asString());
     }
@@ -18,9 +19,10 @@ public class BOOLEANOperationsTest {
     @Test
     public void should_or_with_expression() throws Exception {
         assertEquals(
-                "FROM TABLE_A AS a WHERE a.BOOLEAN = true OR a.INT < 10 OR a.INT > 1000",
+                "FROM TABLE_A AS a WHERE a.BOOLEAN = TRUE OR TRUE OR a.INT < 10 OR a.INT > 1000",
                 Query.from(TABLE_A.as("a"))
                         .where(a -> a.BOOLEAN.eq(true)
+                                .or(true)
                                 .or(a.INT.lt(10))
                                 .or(a.INT.gt(1000))).asString());
     }
@@ -28,7 +30,7 @@ public class BOOLEANOperationsTest {
     @Test
     public void should_eq_with_expression() throws Exception {
         assertEquals(
-                "FROM TABLE_A AS a WHERE (a.BOOLEAN = true OR a.INT < 10) = (a.INT > 1000) OR a.INT > 1000",
+                "FROM TABLE_A AS a WHERE (a.BOOLEAN = TRUE OR a.INT < 10) = (a.INT > 1000) OR a.INT > 1000",
                 Query.from(TABLE_A.as("a"))
                         .where(a -> a.BOOLEAN.eq(true)
                                 .or(a.INT.lt(10))
@@ -39,9 +41,9 @@ public class BOOLEANOperationsTest {
     @Test
     public void should_noteq_with_expression() throws Exception {
         assertEquals(
-                "FROM TABLE_A AS a WHERE (a.BOOLEAN = true OR a.INT < 10) <> (a.INT > 1000) OR a.INT > 1000",
+                "FROM TABLE_A AS a WHERE (a.BOOLEAN <> TRUE OR a.INT < 10) <> (a.INT > 1000) OR a.INT > 1000",
                 Query.from(TABLE_A.as("a"))
-                        .where(a -> a.BOOLEAN.eq(true)
+                        .where(a -> a.BOOLEAN.noteq(true)
                                 .or(a.INT.lt(10)).noteq(a.INT.gt(1000))
                                 .or(a.INT.gt(1000))).asString());
     }

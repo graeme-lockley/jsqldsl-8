@@ -13,6 +13,6 @@ public class BOOLEANConstant extends BOOLEANOperations implements BOOLEANType {
 
     @Override
     public String asString(Precedence precedence) {
-        return Boolean.toString(value);
+        return value ? "TRUE" : "FALSE";
     }
 }
