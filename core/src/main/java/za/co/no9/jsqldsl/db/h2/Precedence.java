@@ -1,12 +1,12 @@
 package za.co.no9.jsqldsl.db.h2;
 
-import stuff.BooleanType;
-
 import java.util.function.BiFunction;
 
 public enum Precedence {
-    QUERY_WHERE(0),
-    EQ_OPERATOR(1);
+    LOWEST_PRECEDENCE(0),
+    QUERY_WHERE(1),
+    EQ_OPERATOR(2),
+    HIGHEST_PRECEDENCE(1000);
 
     private int precedence;
 
