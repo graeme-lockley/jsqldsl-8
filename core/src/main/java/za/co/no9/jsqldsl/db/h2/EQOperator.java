@@ -1,10 +1,10 @@
 package za.co.no9.jsqldsl.db.h2;
 
-public class EQOperator implements BOOLEANType {
+public class EQOperator <T extends BaseType> implements BOOLEANType {
     private final BaseType left;
     private final BaseType right;
 
-    public EQOperator(BaseType left, BaseType right) {
+    public EQOperator(T left, T right) {
         this.left = left;
         this.right = right;
     }
