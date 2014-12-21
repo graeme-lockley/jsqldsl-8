@@ -10,7 +10,7 @@ public enum Precedence {
     OR_OPERATOR(2),
     AND_OPERATOR(3),
 
-    NOT_OPERATOR(4),
+    NOT_OPERATOR(0),
 
     GE_OPERATOR(5),
     GT_OPERATOR(5),

@@ -15,8 +15,8 @@ public class QueryTest {
     @Test
     public void should_support_where_clause() throws Exception {
         assertEquals(
-                "FROM TABLE_A AS a WHERE a.INT = 100",
+                "FROM TABLE_A AS a WHERE NOT(a.INT > 100 AND a.INT < 1000)",
                 Query.from(TABLE_A.as("a"))
-                        .where(a -> a.INT.eq(100)).asString());
+                        .where(a -> a.INT.gt(100).and(a.INT.lt(1000)).not()).asString());
     }
 }
