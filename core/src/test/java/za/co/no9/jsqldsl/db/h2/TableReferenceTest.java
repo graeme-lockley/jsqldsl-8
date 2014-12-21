@@ -4,7 +4,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-public class TableRefTest {
+public class TableReferenceTest {
     @Test
     public void should_show_table_name() throws Exception {
         assertEquals("TABLE_A", TABLE_A.ref().asString());

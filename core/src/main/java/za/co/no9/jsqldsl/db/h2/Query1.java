@@ -1,12 +1,11 @@
 package za.co.no9.jsqldsl.db.h2;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 
-public class Query1<T1 extends TableRef> {
+public class Query1<T1 extends TableReference> {
     private final T1 t1;
-//    private final Optional<BooleanType> where;
+    private final Optional<BOOLEANType> where;
 
     public Query1(T1 t1) {
         this(t1, Optional.<BOOLEANType>empty());
@@ -14,12 +13,12 @@ public class Query1<T1 extends TableRef> {
 
     private Query1(T1 t1, Optional<BOOLEANType> where) {
         this.t1 = t1;
-//        this.where = where;
+        this.where = where;
     }
 
-//    public Query1<T1> where(Function<T1, BooleanType> whereClause) {
-//        return new Query1<>(t1, Optional.of(whereClause.apply(t1)));
-//    }
+    public Query1<T1> where(Function<T1, BOOLEANType> whereClause) {
+        return new Query1<>(t1, Optional.of(whereClause.apply(t1)));
+    }
 
 //    public Query1<T1> orderBy(Function<Author, List<OrderByExpression>> orderBy) {
 //        return this;
@@ -34,7 +33,6 @@ public class Query1<T1 extends TableRef> {
 //    }
 
     public String asString() {
-        return "FROM " + t1.asString();
-//        return "FROM " + t1.asString() + (where.isPresent() ? (" WHERE " + where.get().asString(0)) : "");
+        return "FROM " + t1.asString() + (where.isPresent() ? (" WHERE " + where.get().asString(Precedence.QUERY_WHERE)) : "");
     }
 }
