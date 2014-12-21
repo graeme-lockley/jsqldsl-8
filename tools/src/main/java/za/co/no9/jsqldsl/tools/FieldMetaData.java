@@ -5,9 +5,9 @@ import java.util.Optional;
 public class FieldMetaData {
     final private String name;
     final private String fieldType;
-    private Optional<Integer> columnSize;
-    private Optional<Integer> subWidth;
-    private boolean isNullable;
+    final private Optional<Integer> columnSize;
+    final private Optional<Integer> subWidth;
+    final private boolean isNullable;
     final private boolean isPrimaryKey;
     final private boolean isAutoIncrement;
 
@@ -23,6 +23,10 @@ public class FieldMetaData {
 
     public String name() {
         return name;
+    }
+
+    public String fieldType() {
+        return fieldType;
     }
 
     public boolean isPrimaryKey() {

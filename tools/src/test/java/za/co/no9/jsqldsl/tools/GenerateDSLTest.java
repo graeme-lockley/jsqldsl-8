@@ -7,16 +7,15 @@ import za.co.no9.jfixture.JDBCHandler;
 
 import java.sql.Connection;
 
-public class DatabaseMetaDataTest {
+public class GenerateDSLTest {
     @Test
-    public void should_list_all_tables_in_database() throws Exception {
+    public void should_generate_for_loaded_tables() throws Exception {
         Fixtures fixtures = Fixtures.load(FixturesInput.fromResources("shop.yaml"));
         fixtures.processFixtures();
         Connection connection = fixtures.findHandler(JDBCHandler.class).get().connection();
 
         for (TableMetaData tableMetaData : DatabaseMetaData.from(connection).tables("PUBLIC", null)) {
-            System.out.println(tableMetaData.tableName());
-            System.out.println(tableMetaData.fields());
+            new GenerateDSL().generateTable("a.b.c", tableMetaData);
         }
     }
 }
