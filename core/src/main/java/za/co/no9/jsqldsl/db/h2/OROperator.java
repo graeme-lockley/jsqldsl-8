@@ -11,6 +11,6 @@ public class OROperator extends BOOLEANOperations implements BOOLEANType {
 
     @Override
     public String asString(Precedence precedence) {
-        return Precedence.AND_OPERATOR.asString(precedence, left, right, (l, r) -> l + " OR " + r);
+        return Precedence.OR_OPERATOR.asString(precedence, left, right, (l, r) -> l + " OR " + r);
     }
 }
