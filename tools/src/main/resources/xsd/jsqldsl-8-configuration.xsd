@@ -44,6 +44,7 @@
     <xs:complexType name="TargetType">
         <xs:sequence>
             <xs:element name="package" type="xs:string"/>
+            <xs:element name="destination" type="xs:string"/>
             <xs:element name="driver" type="xs:string"/>
         </xs:sequence>
     </xs:complexType>

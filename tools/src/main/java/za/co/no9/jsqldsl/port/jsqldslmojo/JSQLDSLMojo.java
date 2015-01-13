@@ -1,20 +1,18 @@
 package za.co.no9.jsqldsl.port.jsqldslmojo;
 
+import freemarker.template.TemplateException;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
-import org.xml.sax.SAXException;
-import za.co.no9.jsqldsl.port.jsqldslmojo.configuration.Configuration;
+import za.co.no9.jsqldsl.drivers.DBDriver;
+import za.co.no9.jsqldsl.tools.DatabaseMetaData;
+import za.co.no9.jsqldsl.tools.TableMetaData;
 
-import javax.xml.XMLConstants;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
-import javax.xml.validation.Schema;
-import javax.xml.validation.SchemaFactory;
 import java.io.File;
-import java.net.URL;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
 
 @Mojo(name = "jsqldsl")
 public class JSQLDSLMojo extends AbstractMojo {
@@ -23,33 +21,33 @@ public class JSQLDSLMojo extends AbstractMojo {
 
     @Override
     public void execute() throws MojoExecutionException {
-        getLog().debug("JSQLDSLMojo: Start");
         getLog().debug("JSQLDSLMojo: configurationFile: " + configurationFile.getAbsolutePath());
 
         try {
             processConfiguration(configurationFile);
-        } catch (SAXException | JAXBException e) {
+        } catch (ConfigurationException | SQLException | IOException | TemplateException e) {
             throw new MojoExecutionException(e.getMessage(), e);
         }
-
-        getLog().debug("JSQLDSLMojo: End");
     }
 
-    protected void processConfiguration(File configurationFile) throws JAXBException, SAXException {
-        getConfiguration(configurationFile);
+    protected void processConfiguration(File configurationFile) throws ConfigurationException, SQLException, IOException, TemplateException {
+        processConfiguration(Configuration.from(configurationFile));
     }
 
-    public static Configuration getConfiguration(File configurationFile) throws JAXBException, SAXException {
-        JAXBContext jaxbContext = JAXBContext.newInstance(Configuration.class);
-        Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-        SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-        Schema schema = schemaFactory.newSchema(loadSchema());
+    protected void processConfiguration(Configuration configuration) throws ConfigurationException, SQLException, IOException, TemplateException {
+        DBDriver dbDriver = configuration.getDBDriver();
+        File generatorTargetRoot = configuration.getTargetDestination();
 
-        jaxbUnmarshaller.setSchema(schema);
-        return (Configuration) jaxbUnmarshaller.unmarshal(configurationFile);
-    }
+        try (Connection connection = configuration.getJDBCConnection()) {
+            DatabaseMetaData databaseMetaData = DatabaseMetaData.from(connection);
+            TableFilter tableFilter = configuration.getTableFilter();
 
-    public static URL loadSchema() {
-        return JSQLDSLMojo.class.getResource("/xsd/jsqldsl-8-configuration.xsd");
+            for (TableMetaData table : databaseMetaData.tables(null, null)) {
+                if (tableFilter.filter(table)) {
+                    getLog().info("JSQLDSL: " + table.tableName());
+                    dbDriver.createDSLTable(generatorTargetRoot, configuration.getTargetPackageName(), table);
+                }
+            }
+        }
     }
 }
