@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:configuration="http://www.no9.co.za/xsd/jsqldsl-8-configuration.xsd"
+           targetNamespace="http://www.no9.co.za/xsd/jsqldsl-8-configuration.xsd"
+           elementFormDefault="qualified">
+    <xs:element name="configuration">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="source" type="configuration:SourceType"/>
+                <xs:element name="target" type="configuration:TargetType"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="SourceType">
+        <xs:sequence>
+            <xs:element name="jdbc" type="configuration:JdbcType"/>
+            <xs:element name="includes" type="configuration:IncludesType"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="JdbcType">
+        <xs:sequence>
+            <xs:element name="driver" type="xs:string"/>
+            <xs:element name="url" type="xs:string"/>
+            <xs:element name="username" type="xs:string" minOccurs="0"/>
+            <xs:element name="password" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="IncludesType">
+        <xs:sequence>
+            <xs:element name="include" type="configuration:IncludeType" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="IncludeType">
+        <xs:sequence>
+            <xs:element name="schema" type="xs:string" minOccurs="0"/>
+            <xs:element name="table" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="TargetType">
+        <xs:sequence>
+            <xs:element name="package" type="xs:string"/>
+            <xs:element name="driver" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>
