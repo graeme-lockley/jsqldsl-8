@@ -104,7 +104,7 @@
                 <configuration>
                     <schemaDirectory>${basedir}/src/main/resources/xsd</schemaDirectory>
                     <packageName>za.co.no9.jsqldsl.port.jsqldslmojo.configuration</packageName>
-                    <outputDirectory>${basedir}/target/jaxb2</outputDirectory>
+                    <outputDirectory>${basedir}/target/generated-sources/jaxb2</outputDirectory>
                     <schemaFiles>jsqldsl-8-configuration.xsd</schemaFiles>
                 </configuration>
             </plugin>
