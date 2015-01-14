@@ -5,7 +5,7 @@ import java.util.Optional;
 public abstract class TableReference {
     private Optional<String> alias;
 
-    TableReference(Optional<String> alias) {
+    protected TableReference(Optional<String> alias) {
         this.alias = alias;
     }
 
