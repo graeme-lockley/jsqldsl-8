@@ -1,6 +1,6 @@
 package za.co.no9.jsqldsl.db.h2;
 
-public class INTColumnReference extends INTOperations implements ColumnReference, INTType {
+public class INTColumnReference extends NumericOperations implements ColumnReference, NumericType {
     private final TableReference table;
     private final String name;
 

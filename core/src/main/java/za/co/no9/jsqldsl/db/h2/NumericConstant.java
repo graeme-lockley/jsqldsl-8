@@ -1,14 +1,14 @@
 package za.co.no9.jsqldsl.db.h2;
 
-public class INTConstant extends INTOperations implements INTType {
+public class NumericConstant extends NumericOperations implements NumericType {
     private final int value;
 
-    private INTConstant(int value) {
+    private NumericConstant(int value) {
         this.value = value;
     }
 
-    public static INTConstant from(int value) {
-        return new INTConstant(value);
+    public static NumericConstant from(int value) {
+        return new NumericConstant(value);
     }
 
     @Override
