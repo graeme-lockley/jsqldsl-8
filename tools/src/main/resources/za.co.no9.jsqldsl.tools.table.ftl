@@ -1,13 +1,13 @@
 package ${packageName};
 
-import za.co.no9.jsqldsl.db.h2.TableReference;
+import za.co.no9.jsqldsl.db.h2.*;
 
 public class ${tableMetaData.tableName().dbName()} extends TableReference {
 <#list tableMetaData.fields() as field>
 	public final ${field.fieldType()}ColumnReference ${field.name()};
 </#list>
 
-	private ${tableMetaData.tableName().dbName()}(Optional<String> alias) {
+	private ${tableMetaData.tableName().dbName()}(java.util.Optional<String> alias) {
 		super(alias);
 
 <#list tableMetaData.fields() as field>
@@ -16,11 +16,11 @@ public class ${tableMetaData.tableName().dbName()} extends TableReference {
 	}
 
 	public static ${tableMetaData.tableName().dbName()} ref() {
-		return new ${tableMetaData.tableName().dbName()}(Optional.<String>empty());
+		return new ${tableMetaData.tableName().dbName()}(java.util.Optional.<String>empty());
 	}
 
 	public static ${tableMetaData.tableName().dbName()} as(String alias) {
-		return new ${tableMetaData.tableName().dbName()}(Optional.of(alias));
+		return new ${tableMetaData.tableName().dbName()}(java.util.Optional.of(alias));
 	}
 
 	@Override
