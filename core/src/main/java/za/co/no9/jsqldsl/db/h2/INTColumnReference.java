@@ -4,7 +4,7 @@ public class INTColumnReference extends INTOperations implements ColumnReference
     private final TableReference table;
     private final String name;
 
-    private INTColumnReference(TableReference table, String name) {
+    protected INTColumnReference(TableReference table, String name) {
         this.table = table;
         this.name = name;
     }

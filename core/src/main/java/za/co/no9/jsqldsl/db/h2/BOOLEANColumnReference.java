@@ -4,7 +4,7 @@ public class BOOLEANColumnReference extends BOOLEANOperations implements ColumnR
     private final TableReference table;
     private final String name;
 
-    private BOOLEANColumnReference(TableReference table, String name) {
+    protected BOOLEANColumnReference(TableReference table, String name) {
         this.table = table;
         this.name = name;
     }
