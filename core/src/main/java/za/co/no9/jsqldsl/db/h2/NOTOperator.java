@@ -1,9 +1,9 @@
 package za.co.no9.jsqldsl.db.h2;
 
-public class NOTOperator extends BOOLEANOperations implements BOOLEANType {
-    private BOOLEANType value;
+public class NOTOperator extends BooleanOperations implements BooleanType {
+    private BooleanType value;
 
-    public NOTOperator(BOOLEANType value) {
+    public NOTOperator(BooleanType value) {
         super();
         this.value = value;
     }

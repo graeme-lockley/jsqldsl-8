@@ -1,10 +1,10 @@
 package za.co.no9.jsqldsl.db.h2;
 
-public class OROperator extends BOOLEANOperations implements BOOLEANType {
+public class OROperator extends BooleanOperations implements BooleanType {
     private final BaseType left;
-    private final BOOLEANType right;
+    private final BooleanType right;
 
-    public OROperator(BaseType left, BOOLEANType right) {
+    public OROperator(BaseType left, BooleanType right) {
         this.left = left;
         this.right = right;
     }

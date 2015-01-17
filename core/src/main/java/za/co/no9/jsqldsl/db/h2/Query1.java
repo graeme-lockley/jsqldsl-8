@@ -6,18 +6,18 @@ import java.util.function.Function;
 
 public class Query1<T1 extends TableReference> {
     private final T1 t1;
-    private final Optional<BOOLEANType> where;
+    private final Optional<BooleanType> where;
 
     public Query1(T1 t1) {
-        this(t1, Optional.<BOOLEANType>empty());
+        this(t1, Optional.<BooleanType>empty());
     }
 
-    private Query1(T1 t1, Optional<BOOLEANType> where) {
+    private Query1(T1 t1, Optional<BooleanType> where) {
         this.t1 = t1;
         this.where = where;
     }
 
-    public Query1<T1> where(Function<T1, BOOLEANType> whereClause) {
+    public Query1<T1> where(Function<T1, BooleanType> whereClause) {
         return new Query1<>(t1, Optional.of(whereClause.apply(t1)));
     }
 

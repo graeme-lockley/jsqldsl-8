@@ -1,39 +1,39 @@
 package za.co.no9.jsqldsl.db.h2;
 
-public abstract class BOOLEANOperations implements BOOLEANType {
-    public BOOLEANOperations eq(boolean constantBOOLEAN) {
-        return new EQOperator<>(this, BOOLEANConstant.from(constantBOOLEAN));
+public abstract class BooleanOperations implements BooleanType {
+    public BooleanOperations eq(boolean constantBOOLEAN) {
+        return new EQOperator<>(this, BooleanConstant.from(constantBOOLEAN));
     }
 
-    public BOOLEANOperations eq(BOOLEANType value) {
+    public BooleanOperations eq(BooleanType value) {
         return new EQOperator<>(this, value);
     }
 
-    public BOOLEANOperations noteq(boolean constantBOOLEAN) {
-        return new NOTEQOperator<>(this, BOOLEANConstant.from(constantBOOLEAN));
+    public BooleanOperations noteq(boolean constantBOOLEAN) {
+        return new NOTEQOperator<>(this, BooleanConstant.from(constantBOOLEAN));
     }
 
-    public BOOLEANOperations noteq(BOOLEANType value) {
+    public BooleanOperations noteq(BooleanType value) {
         return new NOTEQOperator<>(this, value);
     }
 
-    public BOOLEANOperations and(boolean constantBOOLEAN) {
-        return new ANDOperator(this, BOOLEANConstant.from(constantBOOLEAN));
+    public BooleanOperations and(boolean constantBOOLEAN) {
+        return new ANDOperator(this, BooleanConstant.from(constantBOOLEAN));
     }
 
-    public BOOLEANOperations and(BOOLEANType value) {
+    public BooleanOperations and(BooleanType value) {
         return new ANDOperator(this, value);
     }
 
-    public BOOLEANOperations or(boolean constantBOOLEAN) {
-        return new OROperator(this, BOOLEANConstant.from(constantBOOLEAN));
+    public BooleanOperations or(boolean constantBOOLEAN) {
+        return new OROperator(this, BooleanConstant.from(constantBOOLEAN));
     }
 
-    public BOOLEANOperations or(BOOLEANType value) {
+    public BooleanOperations or(BooleanType value) {
         return new OROperator(this, value);
     }
 
-    public BOOLEANOperations not() {
+    public BooleanOperations not() {
         return new NOTOperator(this);
     }
 }

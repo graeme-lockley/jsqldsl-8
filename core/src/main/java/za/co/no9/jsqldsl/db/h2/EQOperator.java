@@ -1,6 +1,6 @@
 package za.co.no9.jsqldsl.db.h2;
 
-public class EQOperator <T extends BaseType> extends BOOLEANOperations implements BOOLEANType {
+public class EQOperator<T extends BaseType> extends BooleanOperations implements BooleanType {
     private final BaseType left;
     private final BaseType right;
 

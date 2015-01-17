@@ -1,6 +1,6 @@
 package za.co.no9.jsqldsl.db.h2;
 
-public class GEOperator<T extends BaseType> extends BOOLEANOperations implements BOOLEANType {
+public class GEOperator<T extends BaseType> extends BooleanOperations implements BooleanType {
     private final T left;
     private final T right;
 

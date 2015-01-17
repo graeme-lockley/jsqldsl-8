@@ -1,6 +1,6 @@
 package za.co.no9.jsqldsl.db.h2;
 
-public class BOOLEANColumnReference extends BOOLEANOperations implements ColumnReference, BOOLEANType {
+public class BOOLEANColumnReference extends BooleanOperations implements ColumnReference, BooleanType {
     private final TableReference table;
     private final String name;
 

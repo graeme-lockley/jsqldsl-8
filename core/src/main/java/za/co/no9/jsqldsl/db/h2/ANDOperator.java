@@ -1,10 +1,10 @@
 package za.co.no9.jsqldsl.db.h2;
 
-public class ANDOperator extends BOOLEANOperations implements BOOLEANType {
-    private final BOOLEANType left;
-    private final BOOLEANType right;
+public class ANDOperator extends BooleanOperations implements BooleanType {
+    private final BooleanType left;
+    private final BooleanType right;
 
-    public ANDOperator(BOOLEANType left, BOOLEANType right) {
+    public ANDOperator(BooleanType left, BooleanType right) {
         this.left = left;
         this.right = right;
     }

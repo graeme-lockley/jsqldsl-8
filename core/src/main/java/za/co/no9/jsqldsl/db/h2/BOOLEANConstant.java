@@ -1,14 +1,14 @@
 package za.co.no9.jsqldsl.db.h2;
 
-public class BOOLEANConstant extends BOOLEANOperations implements BOOLEANType {
+public class BooleanConstant extends BooleanOperations implements BooleanType {
     private final boolean value;
 
-    private BOOLEANConstant(boolean value) {
+    private BooleanConstant(boolean value) {
         this.value = value;
     }
 
-    public static BOOLEANConstant from(boolean value) {
-        return new BOOLEANConstant(value);
+    public static BooleanConstant from(boolean value) {
+        return new BooleanConstant(value);
     }
 
     @Override
