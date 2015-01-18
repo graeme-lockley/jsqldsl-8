@@ -16,4 +16,16 @@ public class DSL {
     public static TimestampOperations CURRENT_TIMESTAMP(NumericType precision) {
         return new CurrentTimestampFunction(precision);
     }
+
+    public static TimestampOperations NOW() {
+        return new NowFunction();
+    }
+
+    public static TimestampOperations NOW(int precision) {
+        return new NowFunction(precision);
+    }
+
+    public static TimestampOperations NOW(NumericType precision) {
+        return new NowFunction(precision);
+    }
 }
