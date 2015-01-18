@@ -75,4 +75,17 @@ public abstract class TimestampOperations implements TimestampType {
     public BooleanOperations ge(TimestampType value) {
         return new GEOperator<>(this, value);
     }
+
+    public TimestampOperations DATEADD(String unit, int value) {
+        return new DateAddFunction(StringConstant.from(unit), NumericConstant.from(value), this);
+    }
+    public TimestampOperations DATEADD(StringType unit, int value) {
+        return new DateAddFunction(unit, NumericConstant.from(value), this);
+    }
+    public TimestampOperations DATEADD(String unit, NumericType value) {
+        return new DateAddFunction(StringConstant.from(unit), value, this);
+    }
+    public TimestampOperations DATEADD(StringType unit, NumericType value) {
+        return new DateAddFunction(unit, value, this);
+    }
 }

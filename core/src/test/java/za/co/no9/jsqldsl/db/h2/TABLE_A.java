@@ -7,6 +7,7 @@ public class TABLE_A extends TableReference {
 
     public final INTColumnReference INT;
     public final BOOLEANColumnReference BOOLEAN;
+    public final VARCHARColumnReference VARCHAR;
     public final TIMESTAMPColumnReference TIMESTAMP;
 
     TABLE_A(Optional<String> alias) {
@@ -14,6 +15,7 @@ public class TABLE_A extends TableReference {
 
         INT = INTColumnReference.from(this, "INT");
         BOOLEAN = BOOLEANColumnReference.from(this, "BOOLEAN");
+        VARCHAR = VARCHARColumnReference.from(this, "VARCHAR");
         TIMESTAMP = TIMESTAMPColumnReference.from(this, "TIMESTAMP");
     }
 
