@@ -3,7 +3,6 @@ package za.co.no9.jsqldsl.db.h2;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
-import static za.co.no9.jsqldsl.db.h2.DSL.CURRENT_TIMESTAMP;
 import static za.co.no9.jsqldsl.db.h2.DSL.NOW;
 
 public class NowFunctionTest {
