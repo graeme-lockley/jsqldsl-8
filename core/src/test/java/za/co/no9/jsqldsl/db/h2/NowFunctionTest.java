@@ -8,7 +8,7 @@ import static za.co.no9.jsqldsl.db.h2.DSL.NOW;
 
 public class NowFunctionTest {
     @Test
-    public void should_marshal_with_no_argument() {
+    public void should_marshal_with_no_arguments() {
         assertEquals(
                 "FROM TABLE_A AS A WHERE A.TIMESTAMP <= NOW()",
                 Query.from(TABLE_A.as("A"))

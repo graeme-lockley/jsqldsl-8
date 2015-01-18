@@ -7,7 +7,7 @@ import static za.co.no9.jsqldsl.db.h2.DSL.CURRENT_TIMESTAMP;
 
 public class CurrentTimestampFunctionTest {
     @Test
-    public void should_marshal_with_no_argument() {
+    public void should_marshal_with_no_arguments() {
         assertEquals(
                 "FROM TABLE_A AS A WHERE A.TIMESTAMP <= CURRENT_TIMESTAMP()",
                 Query.from(TABLE_A.as("A"))
