@@ -5,6 +5,10 @@ public class DSL {
         return new CurrentTimeFunction();
     }
 
+    public static TimestampOperations CURTIME() {
+        return new CurtimeFunction();
+    }
+
     public static TimestampOperations CURRENT_TIMESTAMP() {
         return new CurrentTimestampFunction();
     }
