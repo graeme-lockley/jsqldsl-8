@@ -1,5 +1,7 @@
 package za.co.no9.jsqldsl.db.h2;
 
+import java.util.Optional;
+
 public class DSL {
     public static TimestampOperations CURRENT_TIME() {
         return new CurrentTimeFunction();
@@ -10,15 +12,15 @@ public class DSL {
     }
 
     public static TimestampOperations CURRENT_TIMESTAMP() {
-        return new CurrentTimestampFunction();
+        return new CurrentTimestampFunction(Optional.<NumericType>empty());
     }
 
     public static TimestampOperations CURRENT_TIMESTAMP(int precision) {
-        return new CurrentTimestampFunction(precision);
+        return new CurrentTimestampFunction(Optional.of(NumericConstant.from(precision)));
     }
 
     public static TimestampOperations CURRENT_TIMESTAMP(NumericType precision) {
-        return new CurrentTimestampFunction(precision);
+        return new CurrentTimestampFunction(Optional.of(precision));
     }
 
     public static TimestampOperations NOW() {
