@@ -7,12 +7,14 @@ public class TABLE_A extends TableReference {
 
     public final INTColumnReference INT;
     public final BOOLEANColumnReference BOOLEAN;
+    public final TIMESTAMPColumnReference TIMESTAMP;
 
     TABLE_A(Optional<String> alias) {
         super(alias);
 
         INT = INTColumnReference.from(this, "INT");
         BOOLEAN = BOOLEANColumnReference.from(this, "BOOLEAN");
+        TIMESTAMP = TIMESTAMPColumnReference.from(this, "TIMESTAMP");
     }
 
     public static TABLE_A ref() {
