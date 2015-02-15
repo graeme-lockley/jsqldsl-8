@@ -76,19 +76,19 @@ public abstract class TimestampOperations implements TimestampType {
         return new GEOperator<>(this, value);
     }
 
-    public TimestampOperations DATEADD(String unit, int value) {
+    public TimestampOperations dateAdd(String unit, int value) {
         return new DateAddFunction(StringConstant.from(unit), NumericConstant.from(value), this);
     }
 
-    public TimestampOperations DATEADD(StringType unit, int value) {
+    public TimestampOperations dateAdd(StringType unit, int value) {
         return new DateAddFunction(unit, NumericConstant.from(value), this);
     }
 
-    public TimestampOperations DATEADD(String unit, NumericType value) {
+    public TimestampOperations dateAdd(String unit, NumericType value) {
         return new DateAddFunction(StringConstant.from(unit), value, this);
     }
 
-    public TimestampOperations DATEADD(StringType unit, NumericType value) {
+    public TimestampOperations dateAdd(StringType unit, NumericType value) {
         return new DateAddFunction(unit, value, this);
     }
 
