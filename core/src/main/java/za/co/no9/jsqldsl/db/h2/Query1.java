@@ -4,21 +4,21 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 
-public class Query1<T1 extends TableReference> {
-    private final T1 t1;
+public final class Query1<A extends TableReference> {
+    private final A tableA;
     private final Optional<BooleanType> where;
 
-    public Query1(T1 t1) {
-        this(t1, Optional.<BooleanType>empty());
+    public Query1(A tableA) {
+        this(tableA, Optional.<BooleanType>empty());
     }
 
-    private Query1(T1 t1, Optional<BooleanType> where) {
-        this.t1 = t1;
+    private Query1(A tableA, Optional<BooleanType> where) {
+        this.tableA = tableA;
         this.where = where;
     }
 
-    public Query1<T1> where(Function<T1, BooleanType> whereClause) {
-        return new Query1<>(t1, Optional.of(whereClause.apply(t1)));
+    public Query1<A> where(Function<A, BooleanType> whereClause) {
+        return new Query1<>(tableA, Optional.of(whereClause.apply(tableA)));
     }
 
 //    public Query1<T1> orderBy(Function<Author, List<OrderByExpression>> orderBy) {
@@ -29,11 +29,11 @@ public class Query1<T1 extends TableReference> {
 //        return new OnQuery2<>(t1, table2);
 //    }
 
-    public Record1 select(Function<T1, List<BaseType>> projections) {
-        return new Record1<>(this, projections.apply(t1));
+    public Record1 select(Function<A, List<BaseType>> projections) {
+        return new Record1<>(this, projections.apply(tableA));
     }
 
     public String asString() {
-        return "FROM " + t1.asString() + (where.isPresent() ? (" WHERE " + where.get().asString(Precedence.QUERY_WHERE)) : "");
+        return "FROM " + tableA.asString() + (where.isPresent() ? " WHERE " + where.get().asString(Precedence.QUERY_WHERE) : "");
     }
 }
