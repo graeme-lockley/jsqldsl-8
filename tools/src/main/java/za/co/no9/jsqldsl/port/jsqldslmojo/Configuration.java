@@ -20,11 +20,11 @@ public class Configuration {
     private static final String SCHEMA_RESOURCE_NAME = "/xsd/jsqldsl-8-configuration.xsd";
 
     private File configurationFile;
-    private za.co.no9.jsqldsl.port.jsqldslmojo.configuration.Configuration configuration;
+    private za.co.no9.jsqldsl.port.jsqldslmojo.configuration.Configuration xmlConfiguration;
 
-    private Configuration(File configurationFile, za.co.no9.jsqldsl.port.jsqldslmojo.configuration.Configuration configuration) {
+    private Configuration(File configurationFile, za.co.no9.jsqldsl.port.jsqldslmojo.configuration.Configuration xmlConfiguration) {
         this.configurationFile = configurationFile;
-        this.configuration = configuration;
+        this.xmlConfiguration = xmlConfiguration;
     }
 
     protected Configuration(File configurationFile) throws ConfigurationException, JAXBException {
@@ -65,13 +65,13 @@ public class Configuration {
     }
 
     public File getTargetDestination() {
-        return new File(configurationFile.getParentFile(), configuration.getTarget().getDestination());
+        return new File(configurationFile.getParentFile(), xmlConfiguration.getTarget().getDestination());
     }
 
     public Connection getJDBCConnection() throws SQLException {
-        JdbcType jdbcType = configuration.getSource().getJdbc();
+        JdbcType jdbcType = xmlConfiguration.getSource().getJdbc();
         try {
-            Class<?> aClass = Class.forName(jdbcType.getDriver());
+            Class.forName(jdbcType.getDriver());
             return DriverManager.getConnection(
                     jdbcType.getUrl(),
                     jdbcType.getUsername(),
@@ -85,17 +85,17 @@ public class Configuration {
 
     public DBDriver getDBDriver() throws ConfigurationException {
         try {
-            return (DBDriver) Class.forName(configuration.getTarget().getDriver()).newInstance();
+            return (DBDriver) Class.forName(xmlConfiguration.getTarget().getDriver()).newInstance();
         } catch (InstantiationException | IllegalAccessException | ClassNotFoundException ex) {
-            throw new ConfigurationException("Unable to instantiate the DB handler " + configuration.getTarget().getDriver() + ".", ex);
+            throw new ConfigurationException("Unable to instantiate the DB handler " + xmlConfiguration.getTarget().getDriver() + ".", ex);
         }
     }
 
     public String getTargetPackageName() {
-        return configuration.getTarget().getPackage();
+        return xmlConfiguration.getTarget().getPackage();
     }
 
     public TableFilter getTableFilter() {
-        return new TableFilter(configuration.getSource().getIncludes().getInclude());
+        return new TableFilter(xmlConfiguration.getSource().getIncludes().getInclude());
     }
 }
