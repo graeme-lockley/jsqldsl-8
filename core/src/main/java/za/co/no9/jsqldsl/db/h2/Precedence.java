@@ -12,6 +12,9 @@ public enum Precedence {
 
     NOT_OPERATOR(0),
 
+    IS_NULL(0),
+    IS_NOT_NULL(0),
+
     GE_OPERATOR(5),
     GT_OPERATOR(5),
     LE_OPERATOR(5),
@@ -22,14 +25,14 @@ public enum Precedence {
 
     HIGHEST_PRECEDENCE(1000);
 
-    private int precedence;
+    private int ordinal;
 
-    private Precedence(int precedence) {
-        this.precedence = precedence;
+    private Precedence(int ordinal) {
+        this.ordinal = ordinal;
     }
 
     public String asString(Precedence contextPrecedence, BaseType left, BaseType right, BiFunction<String, String, String> format) {
-        if (precedence >= contextPrecedence.precedence) {
+        if (ordinal >= contextPrecedence.ordinal) {
             return format.apply(left.asString(this), right.asString(this));
         } else {
             return '(' + format.apply(left.asString(this), right.asString(this)) + ')';
