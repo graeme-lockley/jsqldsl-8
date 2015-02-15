@@ -10,6 +10,6 @@ public class NOTOperator extends BooleanOperations implements BooleanType {
 
     @Override
     public String asString(Precedence precedence) {
-        return Precedence.NOT_OPERATOR.asString(precedence, value, v -> "NOT(" + v + ")");
+        return Precedence.NOT_OPERATOR.asString(value, v -> "NOT(" + v + ")");
     }
 }

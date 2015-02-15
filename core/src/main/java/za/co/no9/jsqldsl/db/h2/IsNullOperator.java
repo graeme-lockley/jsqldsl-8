@@ -9,6 +9,6 @@ public class IsNullOperator<T extends BaseType> extends BooleanOperations implem
 
     @Override
     public String asString(Precedence precedence) {
-        return Precedence.IS_NULL.asString(precedence, value, v -> v + " IS NULL");
+        return Precedence.IS_NULL.asString(value, v -> v + " IS NULL");
     }
 }

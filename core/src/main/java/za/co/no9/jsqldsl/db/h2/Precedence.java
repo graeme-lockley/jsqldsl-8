@@ -39,7 +39,7 @@ public enum Precedence {
         }
     }
 
-    public String asString(Precedence contextPrecedence, BaseType value, Function<String, String> format) {
+    public String asString(BaseType value, Function<String, String> format) {
         return format.apply(value.asString(this));
     }
 }
