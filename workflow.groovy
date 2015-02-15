@@ -4,7 +4,7 @@ def execute() {
     step $class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/TEST-*.xml'
 
     stage 'Update sonar stats'
-    sh 'mvn -o sonar:sonar'
+    sh 'mvn sonar:sonar'
 }
 
 return this;
