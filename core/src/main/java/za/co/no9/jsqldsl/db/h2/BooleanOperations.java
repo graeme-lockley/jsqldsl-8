@@ -36,4 +36,12 @@ public abstract class BooleanOperations implements BooleanType {
     public BooleanOperations not() {
         return new NOTOperator(this);
     }
+
+    public BooleanOperations isNull() {
+        return new IsNullOperator<>(this);
+    }
+
+    public BooleanOperations isNotNull() {
+        return new IsNotNullOperator<>(this);
+    }
 }

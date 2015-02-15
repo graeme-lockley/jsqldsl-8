@@ -48,4 +48,12 @@ public abstract class NumericOperations implements NumericType {
     public BooleanOperations ge(NumericType value) {
         return new GEOperator<>(this, value);
     }
+
+    public BooleanOperations isNull() {
+        return new IsNullOperator<>(this);
+    }
+
+    public BooleanOperations isNotNull() {
+        return new IsNotNullOperator<>(this);
+    }
 }

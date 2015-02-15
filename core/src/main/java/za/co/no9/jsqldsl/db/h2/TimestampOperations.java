@@ -79,13 +79,24 @@ public abstract class TimestampOperations implements TimestampType {
     public TimestampOperations DATEADD(String unit, int value) {
         return new DateAddFunction(StringConstant.from(unit), NumericConstant.from(value), this);
     }
+
     public TimestampOperations DATEADD(StringType unit, int value) {
         return new DateAddFunction(unit, NumericConstant.from(value), this);
     }
+
     public TimestampOperations DATEADD(String unit, NumericType value) {
         return new DateAddFunction(StringConstant.from(unit), value, this);
     }
+
     public TimestampOperations DATEADD(StringType unit, NumericType value) {
         return new DateAddFunction(unit, value, this);
+    }
+
+    public BooleanOperations isNull() {
+        return new IsNullOperator<>(this);
+    }
+
+    public BooleanOperations isNotNull() {
+        return new IsNotNullOperator<>(this);
     }
 }

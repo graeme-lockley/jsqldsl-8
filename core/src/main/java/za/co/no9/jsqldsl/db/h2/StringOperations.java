@@ -13,7 +13,7 @@ public abstract class StringOperations implements StringType {
         return new NOTEQOperator<>(this, StringConstant.from(stringConstant));
     }
 
-    public BooleanOperations noteq(NumericType value) {
+    public BooleanOperations noteq(StringType value) {
         return new NOTEQOperator<>(this, value);
     }
 
@@ -29,7 +29,7 @@ public abstract class StringOperations implements StringType {
         return new LEOperator<>(this, StringConstant.from(stringConstant));
     }
 
-    public BooleanOperations le(NumericType value) {
+    public BooleanOperations le(StringType value) {
         return new LEOperator<>(this, value);
     }
 
@@ -37,7 +37,7 @@ public abstract class StringOperations implements StringType {
         return new GTOperator<>(this, StringConstant.from(stringConstant));
     }
 
-    public BooleanOperations gt(NumericType value) {
+    public BooleanOperations gt(StringType value) {
         return new GTOperator<>(this, value);
     }
 
@@ -45,8 +45,15 @@ public abstract class StringOperations implements StringType {
         return new GEOperator<>(this, StringConstant.from(stringConstant));
     }
 
-    public BooleanOperations ge(NumericType value) {
+    public BooleanOperations ge(StringType value) {
         return new GEOperator<>(this, value);
     }
 
+    public BooleanOperations isNull() {
+        return new IsNullOperator<>(this);
+    }
+
+    public BooleanOperations isNotNull() {
+        return new IsNotNullOperator<>(this);
+    }
 }
