@@ -2,11 +2,11 @@ package za.co.no9.jsqldsl.db.h2;
 
 import java.util.List;
 
-public class Record1<T1 extends TableReference> {
-    private final Query1<T1> query1;
+public class Record1<A extends TableReference> {
+    private final Query1<A> query1;
     private final List<BaseType> projections;
 
-    public Record1(Query1<T1> query1, List<BaseType> projections) {
+    public Record1(Query1<A> query1, List<BaseType> projections) {
         this.query1 = query1;
         this.projections = projections;
     }
