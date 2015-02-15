@@ -19,6 +19,6 @@ public class NowFunction extends TimestampOperations {
 
     @Override
     public String asString(Precedence precedence) {
-        return precision.isPresent() ? ("NOW(" + precision.get().asString(Precedence.LOWEST_PRECEDENCE) + ")") : "NOW()";
+        return precision.isPresent() ? "NOW(" + precision.get().asString(Precedence.LOWEST_PRECEDENCE) + ")" : "NOW()";
     }
 }

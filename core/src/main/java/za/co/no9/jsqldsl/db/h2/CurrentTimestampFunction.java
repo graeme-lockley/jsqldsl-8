@@ -11,6 +11,6 @@ public class CurrentTimestampFunction extends TimestampOperations {
 
     @Override
     public String asString(Precedence precedence) {
-        return precision.isPresent() ? ("CURRENT_TIMESTAMP(" + precision.get().asString(Precedence.LOWEST_PRECEDENCE) + ")") : "CURRENT_TIMESTAMP()";
+        return precision.isPresent() ? "CURRENT_TIMESTAMP(" + precision.get().asString(Precedence.LOWEST_PRECEDENCE) + ")" : "CURRENT_TIMESTAMP()";
     }
 }
