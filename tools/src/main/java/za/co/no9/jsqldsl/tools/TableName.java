@@ -7,12 +7,12 @@ import java.util.Optional;
 public class TableName {
     private final Optional<String> catalog;
     private final Optional<String> schema;
-    private final String tableName;
+    private final String name;
 
-    private TableName(Optional<String> catalog, Optional<String> schema, String tableName) {
+    private TableName(Optional<String> catalog, Optional<String> schema, String name) {
         this.catalog = catalog;
         this.schema = schema;
-        this.tableName = tableName;
+        this.name = name;
     }
 
     public Optional<String> catalog() {
@@ -24,7 +24,7 @@ public class TableName {
     }
     
     public String dbName() {
-        return StringUtils.upperCase(tableName);
+        return StringUtils.upperCase(name);
     }
 
     public static TableName from(String catalog, String schema, String name) {
@@ -32,11 +32,11 @@ public class TableName {
     }
 
     public String name() {
-        return tableName;
+        return name;
     }
 
     @Override
     public String toString() {
-        return catalog.orElse("") + "." + schema.orElse("") + "." + tableName;
+        return catalog.orElse("") + "." + schema.orElse("") + "." + name;
     }
 }
