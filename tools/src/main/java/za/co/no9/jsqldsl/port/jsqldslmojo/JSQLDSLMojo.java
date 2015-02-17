@@ -7,10 +7,10 @@ import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import za.co.no9.jsqldsl.drivers.DBDriver;
 import za.co.no9.jsqldsl.tools.DatabaseMetaData;
+import za.co.no9.jsqldsl.tools.GenerationException;
 import za.co.no9.jsqldsl.tools.TableMetaData;
 
 import java.io.File;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -25,16 +25,16 @@ public class JSQLDSLMojo extends AbstractMojo {
 
         try {
             processConfiguration(configurationFile);
-        } catch (ConfigurationException | SQLException | IOException | TemplateException e) {
-            throw new MojoExecutionException(e.getMessage(), e);
+        } catch (ConfigurationException | SQLException | TemplateException | GenerationException ex) {
+            throw new MojoExecutionException(ex.getMessage(), ex);
         }
     }
 
-    protected void processConfiguration(File configurationFile) throws ConfigurationException, SQLException, IOException, TemplateException {
+    protected void processConfiguration(File configurationFile) throws ConfigurationException, TemplateException, GenerationException, SQLException {
         processConfiguration(Configuration.from(configurationFile));
     }
 
-    protected void processConfiguration(Configuration configuration) throws ConfigurationException, SQLException, IOException, TemplateException {
+    protected void processConfiguration(Configuration configuration) throws ConfigurationException, TemplateException, GenerationException, SQLException {
         DBDriver dbDriver = configuration.getDBDriver();
         File generatorTargetRoot = configuration.getTargetDestination();
 
