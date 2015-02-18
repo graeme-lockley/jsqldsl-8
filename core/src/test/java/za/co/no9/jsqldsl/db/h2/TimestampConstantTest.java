@@ -12,6 +12,16 @@ public class TimestampConstantTest {
     public static final String CONSTANT_DATE_STRING = "1968-04-09 11:23:21.22";
     public static final Date CONSTANT_DATE = parseDate(CONSTANT_DATE_STRING);
 
+    @Test(expected = NullPointerException.class)
+    public void should_throw_null_pointer_exception_if_passed_a_null_date() {
+        TimestampConstant.from((Date) null);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void should_throw_null_pointer_exception_if_passed_a_null_string() throws Exception {
+        TimestampConstant.from((String) null);
+    }
+
     @Test
     public void should_be_able_to_parse_string() throws Exception {
         assertEquals("'" + CONSTANT_DATE_STRING + "'", TimestampConstant.from(CONSTANT_DATE_STRING).asString(Precedence.HIGHEST_PRECEDENCE));
