@@ -9,7 +9,7 @@ import java.io.Writer;
 import java.util.Map;
 
 public final class FreeMarkerUtils {
-    static private FreeMarkerUtils INSTANCE = new FreeMarkerUtils();
+    private static FreeMarkerUtils INSTANCE = new FreeMarkerUtils();
 
     private Configuration cfg = new Configuration();
 
@@ -23,12 +23,16 @@ public final class FreeMarkerUtils {
         cfg.setIncompatibleImprovements(new Version(2, 3, 20));
     }
 
-    public static String template(Map<String, Object> dataModel, String templateName) throws IOException, TemplateException {
-        Template template = INSTANCE.cfg.getTemplate(templateName);
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        try (Writer out = new OutputStreamWriter(baos)) {
-            template.process(dataModel, out);
-            return baos.toString();
+    static public String template(Map<String, Object> dataModel, String templateName) throws TemplateException {
+        try {
+            Template template = INSTANCE.cfg.getTemplate(templateName);
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            try (Writer out = new OutputStreamWriter(baos)) {
+                template.process(dataModel, out);
+                return baos.toString();
+            }
+        } catch (IOException ex) {
+            throw new TemplateException(ex, null);
         }
     }
 }
