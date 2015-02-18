@@ -3,13 +3,13 @@ package za.co.no9.jsqldsl.tools;
 import java.util.Optional;
 
 public class FieldMetaData {
-    final private String name;
-    final private String fieldType;
-    final private Optional<Integer> columnSize;
-    final private Optional<Integer> subWidth;
-    final private boolean isNullable;
-    final private boolean isPrimaryKey;
-    final private boolean isAutoIncrement;
+    private final String name;
+    private final String fieldType;
+    private final Optional<Integer> columnSize;
+    private final Optional<Integer> subWidth;
+    private final boolean isNullable;
+    private final boolean isPrimaryKey;
+    private final boolean isAutoIncrement;
 
     public FieldMetaData(String name, String fieldType, Optional<Integer> columnSize, Optional<Integer> subWidth, boolean isNullable, boolean isPrimaryKey, boolean isAutoIncrement) {
         this.name = name;
