@@ -17,7 +17,11 @@ public class DatabaseMetaData {
         return new DatabaseMetaData(connection);
     }
 
-    public List<TableMetaData> tables(String schemaNamePattern, String tableNamePattern) throws SQLException {
+    public List<TableMetaData> allTables() throws SQLException {
+        return tables(null, null);
+    }
+
+    private List<TableMetaData> tables(String schemaNamePattern, String tableNamePattern) throws SQLException {
         List<TableMetaData> tables = new ArrayList<>();
 
         java.sql.DatabaseMetaData metaData = connection.getMetaData();

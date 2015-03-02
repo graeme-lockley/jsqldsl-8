@@ -42,7 +42,7 @@ public class JSQLDSLMojo extends AbstractMojo {
             DatabaseMetaData databaseMetaData = dbDriver.databaseMetaData(connection);
             TableFilter tableFilter = configuration.getTableFilter();
 
-            for (TableMetaData table : databaseMetaData.tables(null, null)) {
+            for (TableMetaData table : databaseMetaData.allTables()) {
                 if (tableFilter.filter(table)) {
                     getLog().info("JSQLDSL: " + table.tableName());
                     dbDriver.createDSLTable(generatorTargetRoot, configuration.getTargetPackageName(), table);
