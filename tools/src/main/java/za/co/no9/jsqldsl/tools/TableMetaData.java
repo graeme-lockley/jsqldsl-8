@@ -42,18 +42,22 @@ public class TableMetaData {
         List<FieldMetaData> fields = new ArrayList<>();
         try (ResultSet resultSet = dbm.getColumns(tableName.catalog().orElse(""), tableName.schema().orElse(""), tableName.dbName(), null)) {
             while (resultSet.next()) {
-                String fieldName = resultSet.getString(4);
-                String fieldType = resultSet.getString(6);
-                Optional<Integer> columnSize = parseInt(resultSet.getString(7));
-                Optional<Integer> subWidth = parseInt(resultSet.getString(9));
-                boolean nullable = Integer.parseInt(resultSet.getString(11)) == 1;
-                boolean isAutoIncrement = StringUtils.equalsIgnoreCase("YES", resultSet.getString(23));
-
-                fields.add(new FieldMetaData(fieldName, fieldType, columnSize, subWidth, nullable, primaryKeys.contains(fieldName), isAutoIncrement));
+                fields.add(fromColumnsResultSet(primaryKeys, resultSet));
             }
         }
 
         return fields.toArray(new FieldMetaData[1]);
+    }
+
+    protected static FieldMetaData fromColumnsResultSet(Set<String> primaryKeys, ResultSet resultSet) throws SQLException {
+        String fieldName = resultSet.getString(4);
+        String fieldType = resultSet.getString(6);
+        Optional<Integer> columnSize = parseInt(resultSet.getString(7));
+        Optional<Integer> subWidth = parseInt(resultSet.getString(9));
+        boolean nullable = Integer.parseInt(resultSet.getString(11)) == 1;
+        boolean isAutoIncrement = StringUtils.equalsIgnoreCase("YES", resultSet.getString(23));
+
+        return new FieldMetaData(fieldName, fieldType, columnSize, subWidth, nullable, primaryKeys.contains(fieldName), isAutoIncrement);
     }
 
     private static Optional<Integer> parseInt(String intString) {
