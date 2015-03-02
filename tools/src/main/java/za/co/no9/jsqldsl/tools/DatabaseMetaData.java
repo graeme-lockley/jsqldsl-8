@@ -31,7 +31,7 @@ public class DatabaseMetaData {
         java.sql.DatabaseMetaData metaData = connection.getMetaData();
         try (ResultSet rs = metaData.getTables(null, schemaNamePattern, tableNamePattern, null)) {
             while (rs.next()) {
-                tables.add(TableMetaData.from(connection, TableName.from(rs.getString(1), rs.getString(2), rs.getString(3))));
+                tables.add(dbDriver.tableMetaData(connection, TableName.from(rs.getString(1), rs.getString(2), rs.getString(3))));
             }
         }
 

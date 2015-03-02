@@ -17,7 +17,7 @@ public class TableMetaData {
         this.fieldsMetaData = fieldsMetaData;
     }
 
-    static TableMetaData from(Connection connection, TableName tableName) throws SQLException {
+    public static TableMetaData from(Connection connection, TableName tableName) throws SQLException {
         Set<String> primaryKey = primaryKey(connection, tableName);
 
         return new TableMetaData(tableName, fields(connection, tableName, primaryKey));
