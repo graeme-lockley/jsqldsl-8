@@ -1,5 +1,7 @@
 package za.co.no9.jsqldsl.tools;
 
+import za.co.no9.jsqldsl.drivers.DBDriver;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -7,14 +9,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DatabaseMetaData {
+    private DBDriver dbDriver;
     private Connection connection;
 
-    public DatabaseMetaData(Connection connection) {
+    public DatabaseMetaData(DBDriver dbDriver, Connection connection) {
+        this.dbDriver = dbDriver;
         this.connection = connection;
     }
 
-    public static DatabaseMetaData from(Connection connection) {
-        return new DatabaseMetaData(connection);
+    public static DatabaseMetaData from(DBDriver dbDriver, Connection connection) {
+        return new DatabaseMetaData(dbDriver, connection);
     }
 
     public List<TableMetaData> allTables() throws SQLException {

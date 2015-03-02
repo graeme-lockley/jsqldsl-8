@@ -11,7 +11,7 @@ import java.sql.Connection;
 public class H2 implements DBDriver {
     @Override
     public DatabaseMetaData databaseMetaData(Connection connection) {
-        return DatabaseMetaData.from(connection);
+        return DatabaseMetaData.from(this, connection);
     }
 
     @Override
