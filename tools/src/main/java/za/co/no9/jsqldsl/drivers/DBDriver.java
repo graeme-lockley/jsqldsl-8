@@ -9,5 +9,6 @@ import java.sql.Connection;
 
 public interface DBDriver {
     DatabaseMetaData databaseMetaData(Connection connection);
+
     void createDSLTable(File generatorTargetRoot, String packageName, TableMetaData tableMetaData) throws GenerationException;
 }
