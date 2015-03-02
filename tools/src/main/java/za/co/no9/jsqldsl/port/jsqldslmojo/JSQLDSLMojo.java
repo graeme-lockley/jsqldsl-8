@@ -39,7 +39,7 @@ public class JSQLDSLMojo extends AbstractMojo {
         File generatorTargetRoot = configuration.getTargetDestination();
 
         try (Connection connection = configuration.getJDBCConnection()) {
-            DatabaseMetaData databaseMetaData = DatabaseMetaData.from(connection);
+            DatabaseMetaData databaseMetaData = dbDriver.databaseMetaData(connection);
             TableFilter tableFilter = configuration.getTableFilter();
 
             for (TableMetaData table : databaseMetaData.tables(null, null)) {
