@@ -10,6 +10,7 @@ import java.util.Optional;
 import java.util.Set;
 
 public class H2 extends DBDriverParent {
+    @Override
     protected FieldMetaData fromColumnsResultSet(Set<String> primaryKeys, ResultSet resultSet) throws SQLException {
         String fieldName = resultSet.getString(4);
         String fieldType = resultSet.getString(6);
