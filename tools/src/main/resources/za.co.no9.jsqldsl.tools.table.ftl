@@ -2,7 +2,7 @@ package ${packageName};
 
 import za.co.no9.jsqldsl.db.h2.*;
 
-public class ${tableMetaData.tableName().dbName()} extends TableReference {
+public class ${tableMetaData.tableName().dbName()} extends za.co.no9.jsqldsl.db.TableReference {
 <#list tableMetaData.fields() as field>
 	public final ${field.fieldType()}ColumnReference ${field.name()};
 </#list>
