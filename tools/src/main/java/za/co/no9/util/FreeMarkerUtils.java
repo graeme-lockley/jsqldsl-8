@@ -23,7 +23,7 @@ public final class FreeMarkerUtils {
         cfg.setIncompatibleImprovements(new Version(2, 3, 20));
     }
 
-    static public String template(Map<String, Object> dataModel, String templateName) throws TemplateException {
+    public static String template(Map<String, Object> dataModel, String templateName) throws TemplateException {
         try {
             Template template = INSTANCE.cfg.getTemplate(templateName);
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
