@@ -1,5 +1,7 @@
 package za.co.no9.jsqldsl.db.h2;
 
+import za.co.no9.jsqldsl.db.TableReference;
+
 import java.util.Optional;
 
 public class TABLE_A extends TableReference {

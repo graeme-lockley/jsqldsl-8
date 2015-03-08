@@ -1,5 +1,7 @@
 package za.co.no9.jsqldsl.db.h2;
 
+import za.co.no9.jsqldsl.db.TableReference;
+
 public class BITColumnReference extends BOOLEANColumnReference {
     protected BITColumnReference(TableReference table, String name) {
         super(table, name);

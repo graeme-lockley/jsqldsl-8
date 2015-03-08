@@ -1,9 +1,11 @@
 package za.co.no9.jsqldsl.db.h2;
 
 import org.junit.Test;
+import za.co.no9.jsqldsl.db.EQOperator;
+import za.co.no9.jsqldsl.db.Precedence;
 
 import static org.junit.Assert.assertEquals;
-import static za.co.no9.jsqldsl.db.h2.NumericConstant.from;
+import static za.co.no9.jsqldsl.db.NumericConstant.from;
 
 public class EQOperatorTest {
     @Test

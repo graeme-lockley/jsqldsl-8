@@ -1,5 +1,7 @@
 package za.co.no9.jsqldsl.db.h2;
 
+import za.co.no9.jsqldsl.db.*;
+
 import java.util.Optional;
 
 public final class DSL {

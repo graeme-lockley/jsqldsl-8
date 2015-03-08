@@ -1,6 +1,8 @@
 package za.co.no9.jsqldsl.db.h2;
 
 import org.junit.Test;
+import za.co.no9.jsqldsl.db.Precedence;
+import za.co.no9.jsqldsl.db.TimestampConstant;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

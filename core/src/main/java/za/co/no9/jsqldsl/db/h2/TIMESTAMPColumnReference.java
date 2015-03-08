@@ -1,5 +1,7 @@
 package za.co.no9.jsqldsl.db.h2;
 
+import za.co.no9.jsqldsl.db.*;
+
 public class TIMESTAMPColumnReference extends TimestampOperations implements ColumnReference, TimestampType {
     private final TableReference table;
     private final String name;

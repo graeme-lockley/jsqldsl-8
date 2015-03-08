@@ -1,5 +1,7 @@
 package za.co.no9.jsqldsl.db.h2;
 
+import za.co.no9.jsqldsl.db.*;
+
 public class VARCHARColumnReference extends StringOperations implements ColumnReference, StringType {
     private final TableReference table;
     private final String name;

@@ -3,8 +3,8 @@ package za.co.no9.jsqldsl.db.h2;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
-import static za.co.no9.jsqldsl.db.h2.NumericConstant.from;
-import static za.co.no9.jsqldsl.db.h2.Precedence.LOWEST_PRECEDENCE;
+import static za.co.no9.jsqldsl.db.NumericConstant.from;
+import static za.co.no9.jsqldsl.db.Precedence.LOWEST_PRECEDENCE;
 
 public class NumericConstantTest {
     @Test
