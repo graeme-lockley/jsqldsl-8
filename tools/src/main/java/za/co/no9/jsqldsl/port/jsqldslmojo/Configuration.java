@@ -1,10 +1,7 @@
 package za.co.no9.jsqldsl.port.jsqldslmojo;
 
 import org.xml.sax.SAXException;
-import za.co.no9.jsqldsl.drivers.DBDriver;
 import za.co.no9.jsqldsl.port.jsqldslmojo.configuration.JdbcType;
-import za.co.no9.jsqldsl.port.jsqldslmojo.configuration.PropertyType;
-import za.co.no9.jsqldsl.port.jsqldslmojo.configuration.TargetType;
 
 import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;
@@ -17,7 +14,7 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.Optional;
+import java.util.Iterator;
 
 public class Configuration {
     private static final String SCHEMA_RESOURCE_NAME = "/xsd/jsqldsl-8-configuration.xsd";
@@ -67,12 +64,12 @@ public class Configuration {
         return JSQLDSLMojo.class.getResource(SCHEMA_RESOURCE_NAME);
     }
 
-    public File getTargetDestination() {
-        return new File(configurationFile.getParentFile(), getTargetType().getDestination());
+    public File getParentFile() {
+        return configurationFile.getParentFile();
     }
 
-    private TargetType getTargetType() {
-        return xmlConfiguration.getTargets().getTarget().get(0);
+    public Iterator<Target> getTargets() {
+        return xmlConfiguration.getTargets().getTarget().stream().map(x -> Target.from(this, x)).iterator();
     }
 
     public Connection getJDBCConnection() throws SQLException {
@@ -88,33 +85,6 @@ public class Configuration {
         } catch (SQLException e) {
             throw new SQLException("Unable to connect: " + e.getMessage(), e);
         }
-    }
-
-    public DBDriver getDBDriver() throws ConfigurationException {
-        try {
-            return (DBDriver) Class.forName(getDriver()).newInstance();
-        } catch (InstantiationException | IllegalAccessException | ClassNotFoundException ex) {
-            throw new ConfigurationException("Unable to instantiate the DB handler " + getDriver() + ".", ex);
-        } catch (IllegalArgumentException ex) {
-            throw new ConfigurationException("Unable to instantiate the DB handler as no driver property.", ex);
-        }
-    }
-
-    private String getDriver() {
-        return getProperty("driver").orElseThrow(() -> new IllegalArgumentException("No property 'driver'."));
-    }
-
-    public String getTargetPackageName() {
-        return getProperty("package").orElseThrow(() -> new IllegalArgumentException("No property 'package'."));
-    }
-
-    private Optional<String> getProperty(String name) {
-        for (PropertyType propertyType : getTargetType().getProperties().getProperty()) {
-            if (propertyType.getName().equals(name)) {
-                return Optional.of(propertyType.getValue());
-            }
-        }
-        return Optional.empty();
     }
 
     public TableFilter getTableFilter() {

@@ -5,14 +5,13 @@ import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
-import za.co.no9.jsqldsl.drivers.DBDriver;
-import za.co.no9.jsqldsl.tools.DatabaseMetaData;
 import za.co.no9.jsqldsl.tools.GenerationException;
-import za.co.no9.jsqldsl.tools.TableMetaData;
+import za.co.no9.jsqldsl.tools.ToolHandler;
 
 import java.io.File;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Iterator;
 
 @Mojo(name = "jsqldsl")
 public class JSQLDSLMojo extends AbstractMojo {
@@ -35,18 +34,13 @@ public class JSQLDSLMojo extends AbstractMojo {
     }
 
     protected void processConfiguration(Configuration configuration) throws ConfigurationException, TemplateException, GenerationException, SQLException {
-        DBDriver dbDriver = configuration.getDBDriver();
-        File generatorTargetRoot = configuration.getTargetDestination();
-
         try (Connection connection = configuration.getJDBCConnection()) {
-            DatabaseMetaData databaseMetaData = dbDriver.databaseMetaData(connection);
             TableFilter tableFilter = configuration.getTableFilter();
 
-            for (TableMetaData table : databaseMetaData.allTables()) {
-                if (tableFilter.filter(table)) {
-                    getLog().info("JSQLDSL: " + table.tableName());
-                    dbDriver.createDSLTable(generatorTargetRoot, configuration.getTargetPackageName(), table);
-                }
+            Iterator<Target> targets = configuration.getTargets();
+            while (targets.hasNext()) {
+                ToolHandler toolHandler = targets.next().getToolHandler(getLog());
+                toolHandler.process(connection, tableFilter);
             }
         }
     }

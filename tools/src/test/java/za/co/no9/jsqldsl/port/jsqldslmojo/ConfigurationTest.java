@@ -7,16 +7,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
-import static org.junit.Assert.assertEquals;
-
 public class ConfigurationTest {
-    @Test
-    public void should_unmarshall_XML_configuration_into_Java_objects() throws Exception {
-        Configuration configuration = Configuration.from(getResource("/valid-jsqldsl.xml"));
-
-        assertEquals("x.y.z", configuration.getTargetPackageName());
-    }
-
     @Test(expected = IOException.class)
     public void should_return_an_IOException_if_configuration_file_does_not_exist() throws Exception {
         Configuration.from(getResource("/unknown-jsqldsl.xml"));
