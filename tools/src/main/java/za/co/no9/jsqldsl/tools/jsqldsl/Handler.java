@@ -1,22 +1,26 @@
-package za.co.no9.jsqldsl.tools;
+package za.co.no9.jsqldsl.tools.jsqldsl;
 
 import org.apache.maven.plugin.logging.Log;
 import za.co.no9.jsqldsl.drivers.DBDriver;
 import za.co.no9.jsqldsl.port.jsqldslmojo.ConfigurationException;
 import za.co.no9.jsqldsl.port.jsqldslmojo.TableFilter;
 import za.co.no9.jsqldsl.port.jsqldslmojo.Target;
+import za.co.no9.jsqldsl.tools.DatabaseMetaData;
+import za.co.no9.jsqldsl.tools.GenerationException;
+import za.co.no9.jsqldsl.tools.TableMetaData;
+import za.co.no9.jsqldsl.tools.ToolHandler;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public class JSQLDSLHandler implements ToolHandler {
+public class Handler implements ToolHandler {
     private Log log;
-    private JSQLDSLHandlerTarget target;
+    private HandlerTarget target;
 
     @Override
     public void setup(Log log, Target target) {
         this.log = log;
-        this.target = JSQLDSLHandlerTarget.from(target);
+        this.target = HandlerTarget.from(target);
     }
 
     @Override

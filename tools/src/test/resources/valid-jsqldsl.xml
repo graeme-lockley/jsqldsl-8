@@ -18,7 +18,7 @@
 
     <targets>
         <target>
-            <handler>za.co.no9.jsqldsl.tools.JSQLDSLHandler</handler>
+            <handler>za.co.no9.jsqldsl.tools.jsqldsl.Handler</handler>
             <destination>../generated-test-sources/jsqldsl</destination>
             <properties>
                 <property>

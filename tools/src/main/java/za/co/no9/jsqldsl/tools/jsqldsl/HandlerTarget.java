@@ -1,4 +1,4 @@
-package za.co.no9.jsqldsl.tools;
+package za.co.no9.jsqldsl.tools.jsqldsl;
 
 import za.co.no9.jsqldsl.drivers.DBDriver;
 import za.co.no9.jsqldsl.port.jsqldslmojo.ConfigurationException;
@@ -6,15 +6,15 @@ import za.co.no9.jsqldsl.port.jsqldslmojo.Target;
 
 import java.io.File;
 
-public class JSQLDSLHandlerTarget {
+public class HandlerTarget {
     private final Target target;
 
-    private JSQLDSLHandlerTarget(Target target) {
+    private HandlerTarget(Target target) {
         this.target = target;
     }
 
-    public static JSQLDSLHandlerTarget from(Target target) {
-        return new JSQLDSLHandlerTarget(target);
+    public static HandlerTarget from(Target target) {
+        return new HandlerTarget(target);
     }
 
     public File generatorTargetRoot() {
