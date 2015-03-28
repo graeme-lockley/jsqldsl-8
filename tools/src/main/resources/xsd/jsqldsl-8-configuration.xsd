@@ -49,9 +49,22 @@
 
     <xs:complexType name="TargetType">
         <xs:sequence>
-            <xs:element name="package" type="xs:string"/>
+            <xs:element name="handler" type="xs:string"/>
             <xs:element name="destination" type="xs:string"/>
-            <xs:element name="driver" type="xs:string"/>
+            <xs:element name="properties" type="configuration:PropertiesType"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="PropertiesType">
+        <xs:sequence>
+            <xs:element name="property" type="configuration:PropertyType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="PropertyType">
+        <xs:sequence>
+            <xs:element name="name" type="xs:string"/>
+            <xs:element name="value" type="xs:string"/>
         </xs:sequence>
     </xs:complexType>
 </xs:schema>

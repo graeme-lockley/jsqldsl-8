@@ -18,9 +18,18 @@
 
     <targets>
         <target>
-            <package>x.y.z</package>
+            <handler>blah.blah.blah</handler>
             <destination>../generated-test-sources/jsqldsl</destination>
-            <driver>za.co.no9.jsqldsl.drivers.H2</driver>
+            <properties>
+                <property>
+                    <name>package</name>
+                    <value>x.y.z</value>
+                </property>
+                <property>
+                    <name>driver</name>
+                    <value>za.co.no9.jsqldsl.drivers.H2</value>
+                </property>
+            </properties>
         </target>
     </targets>
 </configuration>

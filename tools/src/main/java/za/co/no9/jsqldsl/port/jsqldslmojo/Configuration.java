@@ -3,6 +3,7 @@ package za.co.no9.jsqldsl.port.jsqldslmojo;
 import org.xml.sax.SAXException;
 import za.co.no9.jsqldsl.drivers.DBDriver;
 import za.co.no9.jsqldsl.port.jsqldslmojo.configuration.JdbcType;
+import za.co.no9.jsqldsl.port.jsqldslmojo.configuration.PropertyType;
 import za.co.no9.jsqldsl.port.jsqldslmojo.configuration.TargetType;
 
 import javax.xml.XMLConstants;
@@ -16,6 +17,7 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Optional;
 
 public class Configuration {
     private static final String SCHEMA_RESOURCE_NAME = "/xsd/jsqldsl-8-configuration.xsd";
@@ -90,14 +92,29 @@ public class Configuration {
 
     public DBDriver getDBDriver() throws ConfigurationException {
         try {
-            return (DBDriver) Class.forName(getTargetType().getDriver()).newInstance();
+            return (DBDriver) Class.forName(getDriver()).newInstance();
         } catch (InstantiationException | IllegalAccessException | ClassNotFoundException ex) {
-            throw new ConfigurationException("Unable to instantiate the DB handler " + getTargetType().getDriver() + ".", ex);
+            throw new ConfigurationException("Unable to instantiate the DB handler " + getDriver() + ".", ex);
+        } catch (IllegalArgumentException ex) {
+            throw new ConfigurationException("Unable to instantiate the DB handler as no driver property.", ex);
         }
     }
 
+    private String getDriver() {
+        return getProperty("driver").orElseThrow(() -> new IllegalArgumentException("No property 'driver'."));
+    }
+
     public String getTargetPackageName() {
-        return getTargetType().getPackage();
+        return getProperty("package").orElseThrow(() -> new IllegalArgumentException("No property 'package'."));
+    }
+
+    private Optional<String> getProperty(String name) {
+        for (PropertyType propertyType : getTargetType().getProperties().getProperty()) {
+            if (propertyType.getName().equals(name)) {
+                return Optional.of(propertyType.getValue());
+            }
+        }
+        return Optional.empty();
     }
 
     public TableFilter getTableFilter() {
