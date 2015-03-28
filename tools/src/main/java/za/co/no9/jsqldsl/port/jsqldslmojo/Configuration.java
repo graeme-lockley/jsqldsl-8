@@ -3,6 +3,7 @@ package za.co.no9.jsqldsl.port.jsqldslmojo;
 import org.xml.sax.SAXException;
 import za.co.no9.jsqldsl.drivers.DBDriver;
 import za.co.no9.jsqldsl.port.jsqldslmojo.configuration.JdbcType;
+import za.co.no9.jsqldsl.port.jsqldslmojo.configuration.TargetType;
 
 import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;
@@ -65,7 +66,11 @@ public class Configuration {
     }
 
     public File getTargetDestination() {
-        return new File(configurationFile.getParentFile(), xmlConfiguration.getTarget().getDestination());
+        return new File(configurationFile.getParentFile(), getTargetType().getDestination());
+    }
+
+    private TargetType getTargetType() {
+        return xmlConfiguration.getTargets().getTarget().get(0);
     }
 
     public Connection getJDBCConnection() throws SQLException {
@@ -85,14 +90,14 @@ public class Configuration {
 
     public DBDriver getDBDriver() throws ConfigurationException {
         try {
-            return (DBDriver) Class.forName(xmlConfiguration.getTarget().getDriver()).newInstance();
+            return (DBDriver) Class.forName(getTargetType().getDriver()).newInstance();
         } catch (InstantiationException | IllegalAccessException | ClassNotFoundException ex) {
-            throw new ConfigurationException("Unable to instantiate the DB handler " + xmlConfiguration.getTarget().getDriver() + ".", ex);
+            throw new ConfigurationException("Unable to instantiate the DB handler " + getTargetType().getDriver() + ".", ex);
         }
     }
 
     public String getTargetPackageName() {
-        return xmlConfiguration.getTarget().getPackage();
+        return getTargetType().getPackage();
     }
 
     public TableFilter getTableFilter() {

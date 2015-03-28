@@ -16,9 +16,11 @@
         </includes>
     </source>
 
-    <target>
-        <package>x.y.z</package>
-        <destination>../generated-test-sources/jsqldsl</destination>
-        <driver>za.co.no9.jsqldsl.drivers.H2</driver>
-    </target>
+    <targets>
+        <target>
+            <package>x.y.z</package>
+            <destination>../generated-test-sources/jsqldsl</destination>
+            <driver>za.co.no9.jsqldsl.drivers.H2</driver>
+        </target>
+    </targets>
 </configuration>
