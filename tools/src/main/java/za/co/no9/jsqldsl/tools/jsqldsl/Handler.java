@@ -34,6 +34,5 @@ public class Handler implements ToolHandler {
                 dbDriver.createDSLTable(target.generatorTargetRoot(), target.getTargetPackageName(), table);
             }
         }
-
     }
 }
