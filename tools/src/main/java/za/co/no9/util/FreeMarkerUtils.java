@@ -2,10 +2,7 @@ package za.co.no9.util;
 
 import freemarker.template.*;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
+import java.io.*;
 import java.util.Map;
 
 public final class FreeMarkerUtils {
@@ -26,13 +23,26 @@ public final class FreeMarkerUtils {
     public static String template(Map<String, Object> dataModel, String templateName) throws TemplateException {
         try {
             Template template = INSTANCE.cfg.getTemplate(templateName);
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            try (Writer out = new OutputStreamWriter(baos)) {
-                template.process(dataModel, out);
-                return baos.toString();
-            }
+            return processTemplate(dataModel, template);
         } catch (IOException ex) {
             throw new TemplateException(ex, null);
+        }
+    }
+
+    public static String stringTemplate(Map<String, Object> dataModel, String templateName, String templateContent) throws TemplateException {
+        try {
+            Template template = new Template(templateName, new StringReader(templateContent), INSTANCE.cfg);
+            return processTemplate(dataModel, template);
+        } catch (IOException ex) {
+            throw new TemplateException(ex, null);
+        }
+    }
+
+    private static String processTemplate(Map<String, Object> dataModel, Template template) throws IOException, TemplateException {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        try (Writer out = new OutputStreamWriter(baos)) {
+            template.process(dataModel, out);
+            return baos.toString();
         }
     }
 }
