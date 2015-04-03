@@ -39,8 +39,16 @@ public final class ForeignKey {
         return primaryEdge.columns();
     }
 
+    public String pkColumnNames(String separator) {
+        return primaryEdge.columnNames(separator);
+    }
+
     public FieldMetaData[] fkColumns() {
         return foreignEdge.columns();
+    }
+
+    public String fkColumnNames(String separator) {
+        return foreignEdge.columnNames(separator);
     }
 }
 

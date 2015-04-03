@@ -8,12 +8,12 @@ import java.util.Optional;
 public class ForeignKeyEdge {
     private final Optional<String> name;
     private final TableName tableName;
-    private final Collection<FieldMetaData> columnNames;
+    private final Collection<FieldMetaData> columns;
 
-    private ForeignKeyEdge(Optional<String> name, TableName tableName, Collection<FieldMetaData> columnNames) {
+    private ForeignKeyEdge(Optional<String> name, TableName tableName, Collection<FieldMetaData> columns) {
         this.name = name;
         this.tableName = tableName;
-        this.columnNames = columnNames;
+        this.columns = columns;
     }
 
     public static ForeignKeyEdge from(Optional<String> name, TableName tableName, Collection<FieldMetaData> columnNames) {
@@ -21,14 +21,14 @@ public class ForeignKeyEdge {
     }
 
     public ForeignKeyEdge addColumn(FieldMetaData column) {
-        List<FieldMetaData> newColumns = new ArrayList<>(columnNames);
+        List<FieldMetaData> newColumns = new ArrayList<>(columns);
         newColumns.add(column);
 
         return new ForeignKeyEdge(name, tableName, newColumns);
     }
 
     public FieldMetaData[] columns() {
-        return columnNames.toArray(new FieldMetaData[columnNames.size()]);
+        return columns.toArray(new FieldMetaData[columns.size()]);
     }
 
     public Optional<String> name() {
@@ -37,5 +37,13 @@ public class ForeignKeyEdge {
 
     public TableName tableName() {
         return tableName;
+    }
+
+    public String columnNames(String separator) {
+        StringBuilder sb = new StringBuilder();
+        for (FieldMetaData column : columns) {
+            sb.append(separator).append(column.name());
+        }
+        return sb.substring(separator.length());
     }
 }

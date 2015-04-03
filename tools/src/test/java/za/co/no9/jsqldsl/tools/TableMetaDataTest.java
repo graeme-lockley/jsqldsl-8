@@ -24,6 +24,13 @@ import static org.junit.Assert.assertTrue;
 public class TableMetaDataTest {
     private static Connection connection;
 
+    private final ForeignKey BOOKS_FK1 = ForeignKey.from(
+            ForeignKeyEdge.from(Optional.of("BOOKS_FK1_INDEX_4"), TableName.from("UNNAMED", "PUBLIC", "AUTHORS"), Arrays.asList(fieldMetaData("ID"), fieldMetaData("FIRST_NAME"))),
+            ForeignKeyEdge.from(Optional.of("BOOKS_FK1"), TableName.from("UNNAMED", "PUBLIC", "BOOKS"), Arrays.asList(fieldMetaData("AUTHOR_ID"), fieldMetaData("NAME"))));
+    private final ForeignKey BOOKS_FK2 = ForeignKey.from(
+            ForeignKeyEdge.from(Optional.of("BOOKS_FK2_INDEX_4"), TableName.from("UNNAMED", "PUBLIC", "AUTHORS"), Arrays.asList(fieldMetaData("ID"), fieldMetaData("SURNAME"))),
+            ForeignKeyEdge.from(Optional.of("BOOKS_FK2"), TableName.from("UNNAMED", "PUBLIC", "BOOKS"), Arrays.asList(fieldMetaData("AUTHOR_ID"), fieldMetaData("NAME"))));
+
     @BeforeClass
     public static void beforeClass() throws Exception {
         Fixtures fixtures = Fixtures.load(FixturesInput.fromResources("foreign-key.yaml"));
@@ -70,17 +77,16 @@ public class TableMetaDataTest {
         assertEquals("BOOKS", bookMetaData.tableName().name());
 
         assertEquals(2, bookMetaData.foreignKeys().length);
-        assertConstraint(
-                ForeignKey.from(
-                        ForeignKeyEdge.from(Optional.of("BOOKS_FK1_INDEX_4"), TableName.from("UNNAMED", "PUBLIC", "AUTHORS"), Arrays.asList(fieldMetaData("ID"), fieldMetaData("FIRST_NAME"))),
-                        ForeignKeyEdge.from(Optional.of("BOOKS_FK1"), TableName.from("UNNAMED", "PUBLIC", "BOOKS"), Arrays.asList(fieldMetaData("AUTHOR_ID"), fieldMetaData("NAME")))),
-                bookMetaData.foreignKeys()[0]);
-        assertConstraint(
-                ForeignKey.from(
-                        ForeignKeyEdge.from(Optional.of("BOOKS_FK2_INDEX_4"), TableName.from("UNNAMED", "PUBLIC", "AUTHORS"), Arrays.asList(fieldMetaData("ID"), fieldMetaData("SURNAME"))),
-                        ForeignKeyEdge.from(Optional.of("BOOKS_FK2"), TableName.from("UNNAMED", "PUBLIC", "BOOKS"), Arrays.asList(fieldMetaData("AUTHOR_ID"), fieldMetaData("NAME")))),
-                bookMetaData.foreignKeys()[1]);
+        assertConstraint(BOOKS_FK1, bookMetaData.foreignKeys()[0]);
+        assertConstraint(BOOKS_FK2, bookMetaData.foreignKeys()[1]);
     }
+
+    @Test
+    public void should_confirm_that_foreign_key_column_names_are_formatted() throws Exception {
+        assertEquals("AUTHOR_ID:NAME", BOOKS_FK1.fkColumnNames(":"));
+        assertEquals("ID, FIRST_NAME", BOOKS_FK1.pkColumnNames(", "));
+    }
+
 
     private void assertConstraint(ForeignKey expected, ForeignKey actual) {
         assertEquals(expected.fkName(), actual.fkName());
