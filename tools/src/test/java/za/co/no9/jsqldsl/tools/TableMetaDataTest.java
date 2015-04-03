@@ -50,7 +50,7 @@ public class TableMetaDataTest {
         List<TableMetaData> tableMetaDatas = DatabaseMetaData.from(new H2(), connection).allTables().stream()
                 .filter(tableFilter::filter)
                 .collect(Collectors.toList());
-        assertEquals(2, tableMetaDatas.size());
+        assertEquals(4, tableMetaDatas.size());
     }
 
     @Test
