@@ -29,6 +29,14 @@ public class FieldMetaData {
         return fieldType;
     }
 
+    public Optional<Integer> columnSize() {
+        return columnSize;
+    }
+
+    public boolean isNullable() {
+        return isNullable;
+    }
+
     public boolean isPrimaryKey() {
         return isPrimaryKey;
     }
