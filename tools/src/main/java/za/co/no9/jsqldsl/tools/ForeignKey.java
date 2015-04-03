@@ -34,6 +34,14 @@ public class ForeignKey {
     public ForeignKey addField(String pkColumnName, String fkColumnName) {
         return new ForeignKey(primaryKey.addColumn(pkColumnName), foreignKey.addColumn(fkColumnName));
     }
+
+    public String[] pkColumnNames() {
+        return primaryKey.columnNames();
+    }
+
+    public String[] fkColumnNames() {
+        return foreignKey.columnNames();
+    }
 }
 
 class ForeignKeyEdge {
