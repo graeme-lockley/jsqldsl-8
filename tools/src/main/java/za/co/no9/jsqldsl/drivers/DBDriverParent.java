@@ -18,14 +18,15 @@ public abstract class DBDriverParent implements DBDriver {
     public TableMetaData tableMetaData(Connection connection, TableName tableName) throws SQLException {
         Set<String> primaryKey = primaryKey(connection, tableName);
 
-        return new TableMetaData(tableName, fields(connection, tableName, primaryKey), constraints(connection, tableName));
+        return new TableMetaData(tableName, fields(connection, tableName, primaryKey));
     }
 
-    private Collection<ForeignKey> constraints(Connection connection, TableName tableName) throws SQLException {
+    @Override
+    public TableMetaData resolveForeignConstraints(Connection connection, Map<TableName, TableMetaData> tables, TableMetaData tableMetaData) throws SQLException {
         java.sql.DatabaseMetaData dbm = connection.getMetaData();
 
         List<ForeignKey> result = new ArrayList<>();
-        try (ResultSet importedKeys = dbm.getImportedKeys(tableName.catalog().orElse(null), tableName.schema().orElse(null), tableName.name())) {
+        try (ResultSet importedKeys = dbm.getImportedKeys(tableMetaData.tableName().catalog().orElse(null), tableMetaData.tableName().schema().orElse(null), tableMetaData.tableName().name())) {
             while (importedKeys.next()) {
                 String PKTABLE_CAT = importedKeys.getString(1);
                 String PKTABLE_SCHEM = importedKeys.getString(2);
@@ -51,7 +52,11 @@ public abstract class DBDriverParent implements DBDriver {
             }
         }
 
-        return result;
+        return tableMetaData.constraints(result);
+    }
+
+    private FieldMetaData resolveField(Map<TableName, TableMetaData> tables, TableName tableName, String fieldName) {
+        return tables.get(tableName).field(fieldName).get();
     }
 
     protected Set<String> primaryKey(Connection connection, TableName tableName) throws SQLException {

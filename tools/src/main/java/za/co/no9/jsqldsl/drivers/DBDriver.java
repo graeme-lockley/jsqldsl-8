@@ -8,6 +8,7 @@ import za.co.no9.jsqldsl.tools.TableName;
 import java.io.File;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Map;
 
 public interface DBDriver {
     DatabaseMetaData databaseMetaData(Connection connection);
@@ -15,4 +16,6 @@ public interface DBDriver {
     TableMetaData tableMetaData(Connection connection, TableName tableName) throws SQLException;
 
     void createDSLTable(File generatorTargetRoot, String packageName, TableMetaData tableMetaData) throws GenerationException;
+
+    TableMetaData resolveForeignConstraints(Connection connection, Map<TableName, TableMetaData> tables, TableMetaData tableMetaData) throws SQLException;
 }

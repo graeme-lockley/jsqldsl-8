@@ -5,9 +5,7 @@ import za.co.no9.jsqldsl.drivers.DBDriver;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class DatabaseMetaData {
     private DBDriver dbDriver;
@@ -27,6 +25,11 @@ public class DatabaseMetaData {
     }
 
     private Collection<TableMetaData> tables(String schemaNamePattern, String tableNamePattern) throws SQLException {
+        Map<TableName, TableMetaData> tables = allTablesDictionary(schemaNamePattern, tableNamePattern);
+        return resolveForeignKeyConstraints(tables);
+    }
+
+    private Map<TableName, TableMetaData> allTablesDictionary(String schemaNamePattern, String tableNamePattern) throws SQLException {
         Map<TableName, TableMetaData> tables = new HashMap<>();
 
         java.sql.DatabaseMetaData metaData = connection.getMetaData();
@@ -36,7 +39,14 @@ public class DatabaseMetaData {
                 tables.put(tableMetaData.tableName(), tableMetaData);
             }
         }
+        return tables;
+    }
 
-        return tables.values();
+    private List<TableMetaData> resolveForeignKeyConstraints(Map<TableName, TableMetaData> tables) throws SQLException {
+        List<TableMetaData> result = new ArrayList<>();
+        for (TableMetaData tableMetaData : tables.values()) {
+            result.add(dbDriver.resolveForeignConstraints(connection, tables, tableMetaData));
+        }
+        return result;
     }
 }
