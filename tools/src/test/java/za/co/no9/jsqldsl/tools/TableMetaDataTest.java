@@ -9,7 +9,7 @@ import za.co.no9.jfixture.FixturesInput;
 import za.co.no9.jfixture.JDBCHandler;
 import za.co.no9.jsqldsl.drivers.H2;
 import za.co.no9.jsqldsl.port.jsqldslmojo.TableFilter;
-import za.co.no9.jsqldsl.port.jsqldslmojo.configuration.IncludeType;
+import za.co.no9.jsqldsl.port.jsqldslmojo.configuration.TablePatternType;
 
 import java.sql.Connection;
 import java.util.Arrays;
@@ -44,7 +44,7 @@ public class TableMetaDataTest {
 
     @Test
     public void should_list_all_tables() throws Exception {
-        IncludeType includeType = new IncludeType();
+        TablePatternType includeType = new TablePatternType();
         includeType.setSchema("PUBLIC");
         TableFilter tableFilter = new TableFilter(Collections.singletonList(includeType));
 
@@ -56,7 +56,7 @@ public class TableMetaDataTest {
 
     @Test
     public void should_confirm_books_content() throws Exception {
-        IncludeType includeType = new IncludeType();
+        TablePatternType includeType = new TablePatternType();
         includeType.setSchema("PUBLIC");
         includeType.setTable("BOOKS");
         TableFilter tableFilter = new TableFilter(Collections.singletonList(includeType));

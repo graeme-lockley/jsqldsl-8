@@ -9,11 +9,15 @@
             <username>sa</username>
         </jdbc>
 
-        <includes>
+        <tables>
             <include>
                 <schema>PUBLIC</schema>
             </include>
-        </includes>
+            <exclude>
+                <schema>PUBLIC</schema>
+                <table>bob</table>
+            </exclude>
+        </tables>
     </source>
 
     <targets>

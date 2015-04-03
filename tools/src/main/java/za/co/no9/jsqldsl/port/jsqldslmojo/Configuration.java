@@ -88,6 +88,6 @@ public class Configuration {
     }
 
     public TableFilter getTableFilter() {
-        return new TableFilter(xmlConfiguration.getSource().getIncludes().getInclude());
+        return new TableFilter(xmlConfiguration.getSource().getTables().getInclude());
     }
 }

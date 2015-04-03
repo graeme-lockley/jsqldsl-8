@@ -15,7 +15,7 @@
     <xs:complexType name="SourceType">
         <xs:sequence>
             <xs:element name="jdbc" type="configuration:JdbcType"/>
-            <xs:element name="includes" type="configuration:IncludesType"/>
+            <xs:element name="tables" type="configuration:TablesType"/>
         </xs:sequence>
     </xs:complexType>
 
@@ -28,13 +28,14 @@
         </xs:sequence>
     </xs:complexType>
 
-    <xs:complexType name="IncludesType">
+    <xs:complexType name="TablesType">
         <xs:sequence>
-            <xs:element name="include" type="configuration:IncludeType" maxOccurs="unbounded"/>
+            <xs:element name="include" type="configuration:TablePatternType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="exclude" type="configuration:TablePatternType" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
 
-    <xs:complexType name="IncludeType">
+    <xs:complexType name="TablePatternType">
         <xs:sequence>
             <xs:element name="schema" type="xs:string" minOccurs="0"/>
             <xs:element name="table" type="xs:string" minOccurs="0"/>
