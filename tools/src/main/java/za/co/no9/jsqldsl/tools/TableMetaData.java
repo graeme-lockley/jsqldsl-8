@@ -17,24 +17,24 @@ public class TableMetaData {
         return tableName;
     }
 
-    public Set<String> primaryKeyFieldNames() {
-        Set<String> result = new HashSet<>();
+    public Set<FieldMetaData> primaryKeyFieldNames() {
+        Set<FieldMetaData> result = new HashSet<>();
 
         for (FieldMetaData fieldMetaData : fieldsMetaData) {
             if (fieldMetaData.isPrimaryKey()) {
-                result.add(fieldMetaData.name());
+                result.add(fieldMetaData);
             }
         }
 
         return result;
     }
 
-    public Set<String> autoIncrementFieldNames() {
-        Set<String> result = new HashSet<>();
+    public Set<FieldMetaData> autoIncrementFieldNames() {
+        Set<FieldMetaData> result = new HashSet<>();
 
         for (FieldMetaData fieldMetaData : fieldsMetaData) {
             if (fieldMetaData.isAutoIncrement()) {
-                result.add(fieldMetaData.name());
+                result.add(fieldMetaData);
             }
         }
 

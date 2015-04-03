@@ -49,4 +49,19 @@ public class FieldMetaData {
     public String toString() {
         return "{name: " + name + ", fieldType: " + fieldType + ", columnSize: " + columnSize + ", subWidth: " + subWidth.orElse(null) + ", isNullable: " + isNullable + ", isPrimaryKey: " + isPrimaryKey + ", isAutoIncrement: " + isAutoIncrement + "}";
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        FieldMetaData that = (FieldMetaData) o;
+
+        return name.equals(that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return name.hashCode();
+    }
 }
