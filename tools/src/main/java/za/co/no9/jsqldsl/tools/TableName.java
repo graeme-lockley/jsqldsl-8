@@ -49,4 +49,12 @@ public class TableName {
 
         return !(catalog != null ? !catalog.equals(tableName.catalog) : tableName.catalog != null) && !(schema != null ? !schema.equals(tableName.schema) : tableName.schema != null) && !(name != null ? !name.equals(tableName.name) : tableName.name != null);
     }
+
+    @Override
+    public int hashCode() {
+        int result = catalog != null ? catalog.hashCode() : 0;
+        result = 31 * result + (schema != null ? schema.hashCode() : 0);
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        return result;
+    }
 }
