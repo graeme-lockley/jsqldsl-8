@@ -2,40 +2,74 @@ package za.co.no9.jsqldsl.port.jsqldslmojo;
 
 import za.co.no9.jsqldsl.port.jsqldslmojo.configuration.TablePatternType;
 import za.co.no9.jsqldsl.tools.TableMetaData;
+import za.co.no9.jsqldsl.tools.TableName;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
+import java.util.regex.Pattern;
 
 public class TableFilter {
-    private final List<TablePatternType> includes;
-    private final List<TablePatternType> excludes;
+    private final List<CompiledTablePattern> includes;
+    private final List<CompiledTablePattern> excludes;
 
     public TableFilter(List<TablePatternType> includes, List<TablePatternType> excludes) {
-        this.includes = includes;
-        this.excludes = excludes;
+        this.includes = compile(includes);
+        this.excludes = compile(excludes);
+    }
+
+    private List<CompiledTablePattern> compile(List<TablePatternType> tablePatternTypes) {
+        List<CompiledTablePattern> result = new ArrayList<>();
+        for (TablePatternType tablePatternType : tablePatternTypes) {
+            result.add(new CompiledTablePattern(tablePatternType));
+        }
+        return result;
     }
 
     public boolean filter(TableMetaData table) {
-        return filterMatch(includes, table) && !filterMatch(excludes, table);
+        return filter(table.tableName());
     }
 
-    private boolean filterMatch(List<TablePatternType> patterns, TableMetaData table) {
-        for (TablePatternType pattern : patterns) {
-            if (filter(table, pattern)) {
+    public boolean filter(TableName tableName) {
+        return filterMatch(includes, tableName) && !filterMatch(excludes, tableName);
+    }
+
+    private boolean filterMatch(List<CompiledTablePattern> patterns, TableName tableName) {
+        for (CompiledTablePattern pattern : patterns) {
+            if (pattern.filter(tableName)) {
                 return true;
             }
         }
         return false;
     }
 
-    private boolean filter(TableMetaData table, TablePatternType pattern) {
-        return filterSchema(table, pattern.getSchema()) && filterTableName(table, pattern.getTable());
-    }
+    static class CompiledTablePattern {
+        public final Predicate<String> schemaPattern;
+        public final Predicate<String> tablePattern;
 
-    private boolean filterTableName(TableMetaData table, String tableName) {
-        return tableName == null || tableName.equals(table.tableName().dbName());
-    }
+        public CompiledTablePattern(String schemaPattern, String tablePattern) {
+            this.schemaPattern = compile(schemaPattern);
+            this.tablePattern = compile(tablePattern);
+        }
 
-    private boolean filterSchema(TableMetaData table, String schema) {
-        return schema == null || schema.equals(table.tableName().schema().orElse(""));
+        public CompiledTablePattern(TablePatternType tablePatternType) {
+            this(tablePatternType.getSchema(), tablePatternType.getTable());
+        }
+
+        private Predicate<String> compile(String pattern) {
+            return pattern == null ? (x -> true) : Pattern.compile(pattern).asPredicate();
+        }
+
+        public boolean filter(TableName tableName) {
+            return filterSchema(tableName) && filterTable(tableName);
+        }
+
+        private boolean filterSchema(TableName tableName) {
+            return !tableName.schema().isPresent() || schemaPattern.test(tableName.schema().get());
+        }
+
+        private boolean filterTable(TableName tableName) {
+            return tablePattern.test(tableName.name());
+        }
     }
 }
