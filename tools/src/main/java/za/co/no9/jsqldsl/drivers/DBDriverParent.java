@@ -42,12 +42,16 @@ public abstract class DBDriverParent implements DBDriver {
                 String FK_NAME = importedKeys.getString(12);
                 String PK_NAME = importedKeys.getString(13);
 
+                TableName pkTableName = TableName.from(PKTABLE_CAT, PKTABLE_SCHEM, PKTABLE_NAME);
+                TableName fkTableName = TableName.from(FKTABLE_CAT, FKTABLE_SCHEM, FKTABLE_NAME);
+                FieldMetaData pkColumn = resolveField(tables, pkTableName, PKCOLUMN_NAME);
+                FieldMetaData fkColumn = resolveField(tables, fkTableName, FKCOLUMN_NAME);
                 if (KEY_SEQ == 1) {
                     result.add(ForeignKey.from(
-                            ForeignKeyEdge.from(Optional.ofNullable(PK_NAME), TableName.from(PKTABLE_CAT, PKTABLE_SCHEM, PKTABLE_NAME), Collections.singletonList(PKCOLUMN_NAME)),
-                            ForeignKeyEdge.from(Optional.ofNullable(FK_NAME), TableName.from(FKTABLE_CAT, FKTABLE_SCHEM, FKTABLE_NAME), Collections.singletonList(FKCOLUMN_NAME))));
+                            ForeignKeyEdge.from(Optional.ofNullable(PK_NAME), pkTableName, Collections.singletonList(pkColumn)),
+                            ForeignKeyEdge.from(Optional.ofNullable(FK_NAME), fkTableName, Collections.singletonList(fkColumn))));
                 } else {
-                    result.set(result.size() - 1, result.get(result.size() - 1).addField(PKCOLUMN_NAME, FKCOLUMN_NAME));
+                    result.set(result.size() - 1, result.get(result.size() - 1).addField(pkColumn, fkColumn));
                 }
             }
         }

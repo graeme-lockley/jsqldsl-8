@@ -72,13 +72,13 @@ public class TableMetaDataTest {
         assertEquals(2, bookMetaData.foreignKeys().length);
         assertConstraint(
                 ForeignKey.from(
-                        ForeignKeyEdge.from(Optional.of("BOOKS_FK1_INDEX_4"), TableName.from("UNNAMED", "PUBLIC", "AUTHORS"), Arrays.asList("ID", "FIRST_NAME")),
-                        ForeignKeyEdge.from(Optional.of("BOOKS_FK1"), TableName.from("UNNAMED", "PUBLIC", "BOOKS"), Arrays.asList("AUTHOR_ID", "NAME"))),
+                        ForeignKeyEdge.from(Optional.of("BOOKS_FK1_INDEX_4"), TableName.from("UNNAMED", "PUBLIC", "AUTHORS"), Arrays.asList(fieldMetaData("ID"), fieldMetaData("FIRST_NAME"))),
+                        ForeignKeyEdge.from(Optional.of("BOOKS_FK1"), TableName.from("UNNAMED", "PUBLIC", "BOOKS"), Arrays.asList(fieldMetaData("AUTHOR_ID"), fieldMetaData("NAME")))),
                 bookMetaData.foreignKeys()[0]);
         assertConstraint(
                 ForeignKey.from(
-                        ForeignKeyEdge.from(Optional.of("BOOKS_FK2_INDEX_4"), TableName.from("UNNAMED", "PUBLIC", "AUTHORS"), Arrays.asList("ID", "SURNAME")),
-                        ForeignKeyEdge.from(Optional.of("BOOKS_FK2"), TableName.from("UNNAMED", "PUBLIC", "BOOKS"), Arrays.asList("AUTHOR_ID", "NAME"))),
+                        ForeignKeyEdge.from(Optional.of("BOOKS_FK2_INDEX_4"), TableName.from("UNNAMED", "PUBLIC", "AUTHORS"), Arrays.asList(fieldMetaData("ID"), fieldMetaData("SURNAME"))),
+                        ForeignKeyEdge.from(Optional.of("BOOKS_FK2"), TableName.from("UNNAMED", "PUBLIC", "BOOKS"), Arrays.asList(fieldMetaData("AUTHOR_ID"), fieldMetaData("NAME")))),
                 bookMetaData.foreignKeys()[1]);
     }
 
@@ -86,8 +86,12 @@ public class TableMetaDataTest {
         assertEquals(expected.fkName(), actual.fkName());
         assertEquals(expected.pkName(), actual.pkName());
         assertEquals(expected.pkTableName(), actual.pkTableName());
-        assertEquals(expected.pkColumnNames(), actual.pkColumnNames());
+        assertEquals(expected.pkColumns(), actual.pkColumns());
         assertEquals(expected.fkTableName(), actual.fkTableName());
-        assertEquals(expected.fkColumnNames(), actual.fkColumnNames());
+        assertEquals(expected.fkColumns(), actual.fkColumns());
+    }
+
+    private FieldMetaData fieldMetaData(String name) {
+        return new FieldMetaData(name, "", Optional.<Integer>empty(), Optional.<Integer>empty(), false, false, false);
     }
 }

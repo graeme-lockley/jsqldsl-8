@@ -31,16 +31,16 @@ public final class ForeignKey {
         return primaryEdge.tableName();
     }
 
-    public ForeignKey addField(String pkColumnName, String fkColumnName) {
-        return new ForeignKey(primaryEdge.addColumn(pkColumnName), foreignEdge.addColumn(fkColumnName));
+    public ForeignKey addField(FieldMetaData pkColumn, FieldMetaData fkColumn) {
+        return new ForeignKey(primaryEdge.addColumn(pkColumn), foreignEdge.addColumn(fkColumn));
     }
 
-    public String[] pkColumnNames() {
-        return primaryEdge.columnNames();
+    public FieldMetaData[] pkColumns() {
+        return primaryEdge.columns();
     }
 
-    public String[] fkColumnNames() {
-        return foreignEdge.columnNames();
+    public FieldMetaData[] fkColumns() {
+        return foreignEdge.columns();
     }
 }
 

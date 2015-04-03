@@ -8,27 +8,27 @@ import java.util.Optional;
 public class ForeignKeyEdge {
     private final Optional<String> name;
     private final TableName tableName;
-    private final Collection<String> columnNames;
+    private final Collection<FieldMetaData> columnNames;
 
-    private ForeignKeyEdge(Optional<String> name, TableName tableName, Collection<String> columnNames) {
+    private ForeignKeyEdge(Optional<String> name, TableName tableName, Collection<FieldMetaData> columnNames) {
         this.name = name;
         this.tableName = tableName;
         this.columnNames = columnNames;
     }
 
-    public static ForeignKeyEdge from(Optional<String> name, TableName tableName, Collection<String> columnNames) {
+    public static ForeignKeyEdge from(Optional<String> name, TableName tableName, Collection<FieldMetaData> columnNames) {
         return new ForeignKeyEdge(name, tableName, columnNames);
     }
 
-    public ForeignKeyEdge addColumn(String columnName) {
-        List<String> newColumns = new ArrayList<>(columnNames);
-        newColumns.add(columnName);
+    public ForeignKeyEdge addColumn(FieldMetaData column) {
+        List<FieldMetaData> newColumns = new ArrayList<>(columnNames);
+        newColumns.add(column);
 
         return new ForeignKeyEdge(name, tableName, newColumns);
     }
 
-    public String[] columnNames() {
-        return columnNames.toArray(new String[columnNames.size()]);
+    public FieldMetaData[] columns() {
+        return columnNames.toArray(new FieldMetaData[columnNames.size()]);
     }
 
     public Optional<String> name() {
