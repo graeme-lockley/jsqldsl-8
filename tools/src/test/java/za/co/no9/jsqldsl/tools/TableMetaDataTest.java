@@ -46,7 +46,7 @@ public class TableMetaDataTest {
     public void should_list_all_tables() throws Exception {
         TablePatternType includeType = new TablePatternType();
         includeType.setSchema("PUBLIC");
-        TableFilter tableFilter = new TableFilter(Collections.singletonList(includeType));
+        TableFilter tableFilter = new TableFilter(Collections.singletonList(includeType), Collections.EMPTY_LIST);
 
         List<TableMetaData> tableMetaDatas = DatabaseMetaData.from(new H2(), connection).allTables().stream()
                 .filter(tableFilter::filter)
@@ -59,7 +59,7 @@ public class TableMetaDataTest {
         TablePatternType includeType = new TablePatternType();
         includeType.setSchema("PUBLIC");
         includeType.setTable("BOOKS");
-        TableFilter tableFilter = new TableFilter(Collections.singletonList(includeType));
+        TableFilter tableFilter = new TableFilter(Collections.singletonList(includeType), Collections.EMPTY_LIST);
 
         Optional<TableMetaData> optBookMetaData = DatabaseMetaData.from(new H2(), connection).allTables().stream()
                 .filter(tableFilter::filter)

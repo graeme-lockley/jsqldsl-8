@@ -6,23 +6,29 @@ import za.co.no9.jsqldsl.tools.TableMetaData;
 import java.util.List;
 
 public class TableFilter {
-    private List<TablePatternType> includes;
+    private final List<TablePatternType> includes;
+    private final List<TablePatternType> excludes;
 
-    public TableFilter(List<TablePatternType> includes) {
+    public TableFilter(List<TablePatternType> includes, List<TablePatternType> excludes) {
         this.includes = includes;
+        this.excludes = excludes;
     }
 
     public boolean filter(TableMetaData table) {
-        for (TablePatternType include : includes) {
-            if (filter(table, include)) {
+        return filterMatch(includes, table) && !filterMatch(excludes, table);
+    }
+
+    private boolean filterMatch(List<TablePatternType> patterns, TableMetaData table) {
+        for (TablePatternType pattern : patterns) {
+            if (filter(table, pattern)) {
                 return true;
             }
         }
         return false;
     }
 
-    private boolean filter(TableMetaData table, TablePatternType include) {
-        return filterSchema(table, include.getSchema()) && filterTableName(table, include.getTable());
+    private boolean filter(TableMetaData table, TablePatternType pattern) {
+        return filterSchema(table, pattern.getSchema()) && filterTableName(table, pattern.getTable());
     }
 
     private boolean filterTableName(TableMetaData table, String tableName) {
