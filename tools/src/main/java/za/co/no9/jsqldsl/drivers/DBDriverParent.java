@@ -6,10 +6,7 @@ import java.io.File;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public abstract class DBDriverParent implements DBDriver {
     @Override
@@ -21,7 +18,38 @@ public abstract class DBDriverParent implements DBDriver {
     public TableMetaData tableMetaData(Connection connection, TableName tableName) throws SQLException {
         Set<String> primaryKey = primaryKey(connection, tableName);
 
-        return new TableMetaData(tableName, fields(connection, tableName, primaryKey));
+        return new TableMetaData(tableName, fields(connection, tableName, primaryKey), constraints(connection, tableName));
+    }
+
+    private Collection<ForeignKey> constraints(Connection connection, TableName tableName) throws SQLException {
+        java.sql.DatabaseMetaData dbm = connection.getMetaData();
+
+        List<ForeignKey> result = new ArrayList<>();
+        try (ResultSet importedKeys = dbm.getImportedKeys(tableName.catalog().orElse(null), tableName.schema().orElse(null), tableName.name())) {
+            while (importedKeys.next()) {
+                String PKTABLE_CAT = importedKeys.getString(1);
+                String PKTABLE_SCHEM = importedKeys.getString(2);
+                String PKTABLE_NAME = importedKeys.getString(3);
+                String PKCOLUMN_NAME = importedKeys.getString(4);
+                String FKTABLE_CAT = importedKeys.getString(5);
+                String FKTABLE_SCHEM = importedKeys.getString(6);
+                String FKTABLE_NAME = importedKeys.getString(7);
+                String FKCOLUMN_NAME = importedKeys.getString(8);
+                short KEY_SEQ = importedKeys.getShort(9);
+                short UPDATE_RULE = importedKeys.getShort(10);
+                short DELETE_RULE = importedKeys.getShort(11);
+                String FK_NAME = importedKeys.getString(12);
+                String PK_NAME = importedKeys.getString(13);
+
+                if (KEY_SEQ == 1) {
+                    result.add(new ForeignKey(Optional.ofNullable(PK_NAME), TableName.from(PKTABLE_CAT, PKTABLE_SCHEM, PKTABLE_NAME), PKCOLUMN_NAME, Optional.ofNullable(FK_NAME), TableName.from(FKTABLE_CAT, FKTABLE_SCHEM, FKTABLE_NAME), FKCOLUMN_NAME));
+                } else {
+                    result.set(result.size() - 1, result.get(result.size() - 1).addField(PKCOLUMN_NAME, FKCOLUMN_NAME));
+                }
+            }
+        }
+
+        return result;
     }
 
     protected Set<String> primaryKey(Connection connection, TableName tableName) throws SQLException {

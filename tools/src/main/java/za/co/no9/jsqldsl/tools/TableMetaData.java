@@ -1,17 +1,16 @@
 package za.co.no9.jsqldsl.tools;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class TableMetaData {
     private final TableName tableName;
     private final FieldMetaData[] fieldsMetaData;
+    private final Collection<ForeignKey> constraints;
 
-    public TableMetaData(TableName tableName, FieldMetaData[] fieldsMetaData) {
+    public TableMetaData(TableName tableName, FieldMetaData[] fieldsMetaData, Collection<ForeignKey> constraints) {
         this.tableName = tableName;
         this.fieldsMetaData = fieldsMetaData;
+        this.constraints = new ArrayList<>(constraints);
     }
 
     public TableName tableName() {
@@ -44,5 +43,9 @@ public class TableMetaData {
 
     public List<FieldMetaData> fields() {
         return Arrays.asList(fieldsMetaData);
+    }
+
+    public ForeignKey[] foreignKeys() {
+        return constraints.toArray(new ForeignKey[constraints.size()]);
     }
 }

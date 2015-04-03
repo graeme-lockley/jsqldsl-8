@@ -22,7 +22,7 @@ public class TableName {
     public Optional<String> schema() {
         return schema;
     }
-    
+
     public String dbName() {
         return StringUtils.upperCase(name);
     }
@@ -38,5 +38,15 @@ public class TableName {
     @Override
     public String toString() {
         return catalog.orElse("") + "." + schema.orElse("") + "." + name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        TableName tableName = (TableName) o;
+
+        return !(catalog != null ? !catalog.equals(tableName.catalog) : tableName.catalog != null) && !(schema != null ? !schema.equals(tableName.schema) : tableName.schema != null) && !(name != null ? !name.equals(tableName.name) : tableName.name != null);
     }
 }
