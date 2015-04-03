@@ -69,12 +69,19 @@ public class TableMetaDataTest {
         assertEquals("BOOKS", bookMetaData.tableName().name());
 
         assertEquals(2, bookMetaData.foreignKeys().length);
-        assertEquals("BOOKS_FK1", bookMetaData.foreignKeys()[0].fkName().get());
-        assertEquals(TableName.from("UNNAMED", "PUBLIC", "AUTHORS"), bookMetaData.foreignKeys()[0].pkTableName());
-        assertEquals(TableName.from("UNNAMED", "PUBLIC", "BOOKS"), bookMetaData.foreignKeys()[0].fkTableName());
+        assertConstraint(
+                TableName.from("UNNAMED", "PUBLIC", "AUTHORS"),
+                "BOOKS_FK1",
+                TableName.from("UNNAMED", "PUBLIC", "BOOKS"), bookMetaData.foreignKeys()[0]);
+        assertConstraint(
+                TableName.from("UNNAMED", "PUBLIC", "AUTHORS"),
+                "BOOKS_FK2",
+                TableName.from("UNNAMED", "PUBLIC", "BOOKS"), bookMetaData.foreignKeys()[1]);
+    }
 
-        assertEquals("BOOKS_FK2", bookMetaData.foreignKeys()[1].fkName().get());
-        assertEquals(TableName.from("UNNAMED", "PUBLIC", "AUTHORS"), bookMetaData.foreignKeys()[1].pkTableName());
-        assertEquals(TableName.from("UNNAMED", "PUBLIC", "BOOKS"), bookMetaData.foreignKeys()[1].fkTableName());
+    private void assertConstraint(TableName pkTableName, String fkName, TableName fkTableName, ForeignKey constraint) {
+        assertEquals(fkName, constraint.fkName().get());
+        assertEquals(pkTableName, constraint.pkTableName());
+        assertEquals(fkTableName, constraint.fkTableName());
     }
 }
