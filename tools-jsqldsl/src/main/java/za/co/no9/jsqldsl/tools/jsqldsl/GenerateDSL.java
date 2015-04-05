@@ -1,7 +1,9 @@
-package za.co.no9.jsqldsl.tools;
+package za.co.no9.jsqldsl.tools.jsqldsl;
 
 import freemarker.template.TemplateException;
 import org.apache.commons.io.FileUtils;
+import za.co.no9.jsqldsl.tools.GenerationException;
+import za.co.no9.jsqldsl.tools.TableMetaData;
 import za.co.no9.util.FreeMarkerUtils;
 
 import java.io.File;

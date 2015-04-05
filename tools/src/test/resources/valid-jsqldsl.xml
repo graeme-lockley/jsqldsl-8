@@ -22,7 +22,7 @@
 
     <targets>
         <target>
-            <handler>za.co.no9.jsqldsl.tools.jsqldsl.Handler</handler>
+            <handler>za.co.no9.jsqldsl.tools.HandlerTest</handler>
             <destination>../generated-test-sources/jsqldsl</destination>
             <properties>
                 <property>

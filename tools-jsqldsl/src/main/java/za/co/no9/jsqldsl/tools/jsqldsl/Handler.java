@@ -31,7 +31,7 @@ public class Handler implements ToolHandler {
         for (TableMetaData table : databaseMetaData.allTables()) {
             if (tableFilter.filter(table)) {
                 log.info("JSQLDSL: " + table.tableName());
-                dbDriver.createDSLTable(target.generatorTargetRoot(), target.getTargetPackageName(), table);
+                new GenerateDSL().generateTable(target.generatorTargetRoot(), target.getTargetPackageName(), table);
             }
         }
     }

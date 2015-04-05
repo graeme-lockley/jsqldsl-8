@@ -2,7 +2,6 @@ package za.co.no9.jsqldsl.drivers;
 
 import za.co.no9.jsqldsl.tools.*;
 
-import java.io.File;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -90,9 +89,4 @@ public abstract class DBDriverParent implements DBDriver {
     }
 
     protected abstract FieldMetaData fromColumnsResultSet(Set<String> primaryKeys, ResultSet resultSet) throws SQLException;
-
-    @Override
-    public void createDSLTable(File generatorTargetRoot, String packageName, TableMetaData tableMetaData) throws GenerationException {
-        new GenerateDSL().generateTable(generatorTargetRoot, packageName, tableMetaData);
-    }
 }
