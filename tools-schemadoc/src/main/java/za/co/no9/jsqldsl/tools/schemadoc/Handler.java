@@ -8,7 +8,6 @@ import za.co.no9.jsqldsl.port.jsqldslmojo.TableFilter;
 import za.co.no9.jsqldsl.port.jsqldslmojo.Target;
 import za.co.no9.jsqldsl.tools.DatabaseMetaData;
 import za.co.no9.jsqldsl.tools.GenerationException;
-import za.co.no9.jsqldsl.tools.TableMetaData;
 import za.co.no9.jsqldsl.tools.ToolHandler;
 import za.co.no9.util.FreeMarkerUtils;
 
@@ -38,14 +37,11 @@ public class Handler implements ToolHandler {
         File outputFile = new File(target.generatorTargetRoot(), "output.dot");
 
         try (PrintStream fos = new PrintStream(new FileOutputStream(outputFile))) {
-            fos.println(FreeMarkerUtils.stringTemplate(assembleMap(from("target", target)), "start", target.startDocumentTemplate()));
-            for (TableMetaData table : databaseMetaData.allTables()) {
-                if (tableFilter.filter(table)) {
-                    log.info("SchemaDoc: " + table.tableName());
-                    fos.println(FreeMarkerUtils.stringTemplate(assembleMap(from("target", target), from("tableMetaData", table)), "table", target.tableTemplate()));
-                }
-            }
-            fos.println(FreeMarkerUtils.stringTemplate(assembleMap(from("target", target)), "end", target.endDocumentTemplate()));
+            fos.println(FreeMarkerUtils.template(
+                    assembleMap(
+                            from("target", target),
+                            from("databaseMetaData", databaseMetaData),
+                            from("tableFilter", tableFilter)), target.template().orElse("schemadoc/template.ftl")));
         } catch (TemplateException | FileNotFoundException ex) {
             throw new GenerationException(ex);
         }

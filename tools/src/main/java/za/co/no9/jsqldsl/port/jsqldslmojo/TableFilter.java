@@ -5,9 +5,11 @@ import za.co.no9.jsqldsl.tools.TableMetaData;
 import za.co.no9.jsqldsl.tools.TableName;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class TableFilter {
     private final List<CompiledTablePattern> includes;
@@ -30,17 +32,16 @@ public class TableFilter {
         return filter(table.tableName());
     }
 
+    public Collection<TableMetaData> filter(Collection<TableMetaData> tables) {
+        return tables.stream().filter(this::filter).collect(Collectors.<TableMetaData>toList());
+    }
+
     public boolean filter(TableName tableName) {
         return filterMatch(includes, tableName) && !filterMatch(excludes, tableName);
     }
 
     private boolean filterMatch(List<CompiledTablePattern> patterns, TableName tableName) {
-        for (CompiledTablePattern pattern : patterns) {
-            if (pattern.filter(tableName)) {
-                return true;
-            }
-        }
-        return false;
+        return patterns.stream().anyMatch(x -> x.filter(tableName));
     }
 
     static class CompiledTablePattern {
