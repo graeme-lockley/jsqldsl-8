@@ -34,7 +34,7 @@ public class Handler implements ToolHandler {
         DatabaseMetaData databaseMetaData = dbDriver.databaseMetaData(connection);
 
         target.generatorTargetRoot().mkdirs();
-        File outputFile = new File(target.generatorTargetRoot(), "output.dot");
+        File outputFile = target.getTemplateOutputFile();
 
         try (PrintStream fos = new PrintStream(new FileOutputStream(outputFile))) {
             fos.println(FreeMarkerUtils.template(
@@ -47,7 +47,7 @@ public class Handler implements ToolHandler {
         }
 
         try {
-            String[] args = {"/bin/sh", "-c", "dot -T png -o " + (new File(target.generatorTargetRoot(), "output.png")).getAbsolutePath() + " " + outputFile.getAbsolutePath()};
+            String[] args = {"/bin/sh", "-c", target.getPostCommand()};
             log.info("SchemaDoc: " + args[0] + " " + args[1] + " '" + args[2] + "'");
             Runtime.getRuntime().exec(args);
         } catch (IOException ex) {
