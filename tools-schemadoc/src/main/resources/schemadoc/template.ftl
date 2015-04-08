@@ -21,16 +21,15 @@ ${tableMetaData.tableName().dbName()} [label= <<TABLE BORDER="2" CELLBORDER="1" 
                 BGCOLOR="#bed1b8"
                 </#if>
                 ALIGN="LEFT"><#if field.isNullable()>
-                <FONT COLOR="#696969">${field.name()}</FONT>
+<FONT COLOR="#696969">${field.name()}</FONT>
             <#else>
-            ${field.name()}
+${field.name()}
             </#if>
             </TD>
             <TD <#if field.isPrimaryKey()>
                     BGCOLOR="#bed1b8"
             </#if>
-                    >${field.fieldType()}<#if field.columnSize().isPresent()>
-                (${field.columnSize().get()})
+                    >${field.fieldType()}<#if field.columnSize().isPresent()>(${field.columnSize().get()})
             </#if>
             </TD>
         </TR>
